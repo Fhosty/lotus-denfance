@@ -26,14 +26,21 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#accueil">Accueil</a></li>
-        <li><a href="#qui-sommes-nous">Qui sommes-nous ?</a></li>
-        <li><a href="#nos-actions">Nos Actions</a></li>
-        <li><a href="#agenda">Agenda</a></li>
-        <li><a href="#soutenir">Nous soutenir</a></li>
-        <li><a href="#boutique">Boutique</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li>
+        <li><a href="#qui-sommes-nous" data-section="qui-sommes-nous">L'Association</a></li>
+        <li><a href="#nos-actions" data-section="nos-actions">Nos Actions</a></li>
+        <li><a href="#agenda" data-section="agenda">Agenda</a></li>
+        <li class="nav-has-dropdown">
+          <button class="nav-dropdown-toggle" aria-expanded="false">
+            Agir <span class="nav-arrow">▾</span>
+          </button>
+          <ul class="nav-dropdown">
+            <li><a href="#soutenir" data-section="soutenir">💛 Nous soutenir</a></li>
+            <li><a href="#boutique" data-section="boutique">👕 Boutique</a></li>
+            <li><a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener">❤ Faire un don</a></li>
+          </ul>
+        </li>
+        <li><a href="#contact" data-section="contact">Contact</a></li>
+        <li class="nav-cta">
           <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-don">
             ❤ Faire un don
           </a>
