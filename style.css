@@ -664,6 +664,188 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
 }
 .fade-in.visible { opacity: 1; transform: none; }
 
+/* ===== COMMENT NOUS SOUTENIR ===== */
+.soutenir { padding: 96px 0; background: var(--white); }
+.soutenir-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.soutenir-card {
+  background: var(--bg-light);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  height: 100%;
+}
+.soutenir-card.mini { padding: 28px 24px; background: var(--white); border: 1px solid #EEE; box-shadow: var(--shadow-sm); }
+.soutenir-right { display: flex; flex-direction: column; gap: 24px; }
+.soutenir-card-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.soutenir-card h3 { color: var(--green-dark); margin-bottom: 14px; font-size: 1.2rem; }
+.soutenir-card p { color: var(--text-mid); font-size: .95rem; margin-bottom: 20px; }
+.soutenir-card p strong { color: var(--text-dark); }
+.btn-outline-green {
+  display: inline-flex;
+  align-items: center;
+  color: var(--green);
+  font-weight: 600;
+  font-size: .9rem;
+  transition: var(--transition);
+  margin-bottom: 24px;
+}
+.btn-outline-green:hover { color: var(--pink); gap: 4px; }
+.loto-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+.loto-gallery img, .atelier-gallery img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: var(--transition);
+}
+.loto-gallery img:hover, .atelier-gallery img:hover { transform: scale(1.03); box-shadow: var(--shadow-md); }
+.atelier-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.atelier-gallery img { aspect-ratio: 3/4; }
+
+/* ===== BOUTIQUE ===== */
+.boutique {
+  padding: 96px 0;
+  background: linear-gradient(160deg, var(--green-dark) 0%, #1a3a2a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.boutique::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(200,91,138,.12) 0%, transparent 60%);
+}
+.boutique .container { position: relative; z-index: 1; }
+.boutique-collection {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  margin-bottom: 32px;
+  backdrop-filter: blur(6px);
+}
+.collection-title {
+  color: var(--white);
+  font-size: 1.4rem;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.product-card {
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  transition: var(--transition);
+}
+.product-card:hover { background: rgba(255,255,255,.16); transform: translateY(-3px); }
+.product-card.viet { border-color: rgba(244,184,209,.3); background: rgba(200,91,138,.12); }
+.product-card.viet:hover { background: rgba(200,91,138,.22); }
+.product-emoji { font-size: 1.8rem; }
+.product-name { color: rgba(255,255,255,.85); font-size: .85rem; font-weight: 500; }
+.product-price { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+.vietnam-collection { border-color: rgba(244,184,209,.3) !important; }
+.vietnam-header { margin-bottom: 28px; }
+.vietnam-badge {
+  display: inline-block;
+  background: var(--pink);
+  color: var(--white);
+  padding: 5px 16px;
+  border-radius: 50px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.vietnam-desc { color: rgba(255,255,255,.75); font-size: .95rem; line-height: 1.7; margin-top: 12px; }
+.vietnam-desc strong { color: var(--white); }
+.boutique-visuals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.boutique-visuals img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.15);
+  transition: var(--transition);
+}
+.boutique-visuals img:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); }
+.boutique-cta {
+  text-align: center;
+  margin-top: 16px;
+  padding: 36px;
+  background: rgba(255,255,255,.06);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255,.1);
+}
+.boutique-cta p { color: rgba(255,255,255,.7); margin-bottom: 20px; font-size: .92rem; }
+
+/* ===== REMERCIEMENTS ===== */
+.remerciements {
+  padding: 96px 0;
+  background: var(--bg-light);
+}
+.remerciements-inner { text-align: center; }
+.remerciements-inner h2 { color: var(--green-dark); margin: 12px 0 40px; }
+.remerciements-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px;
+  align-items: center;
+  text-align: left;
+}
+.remerciements-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid var(--green);
+}
+.remerciements-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.remerciements-card h3 { color: var(--green-dark); margin-bottom: 20px; font-size: 1.3rem; }
+.remerciements-card p { color: var(--text-mid); margin-bottom: 16px; font-size: .97rem; line-height: 1.75; }
+.remerciements-card p strong { color: var(--text-dark); }
+.remerciements-signature { color: var(--pink) !important; font-style: italic; font-weight: 600; font-size: .92rem !important; margin-top: 24px; margin-bottom: 0 !important; }
+.remerciements-photos { display: flex; flex-direction: column; gap: 16px; }
+.remerciements-photos img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+.remerciements-photos img:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); }
+
 /* ===== RESPONSIVE ===== */
 
 /* --- Tablette large (≤1024px) --- */
@@ -680,6 +862,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   .footer-brand { grid-column: span 2; }
   .steps-grid { gap: 10px; }
   .step { min-width: 140px; padding: 24px 14px; }
+}
+
+/* --- Tablette large (nouvelles sections) --- */
+@media (max-width: 1024px) {
+  .soutenir-grid { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+  .remerciements-grid { grid-template-columns: 1fr; }
+  .remerciements-photos { flex-direction: row; }
+  .remerciements-photos img { aspect-ratio: 3/2; }
 }
 
 /* --- Tablette (≤768px) --- */
@@ -786,6 +977,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   .footer-brand { grid-column: auto; }
   .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
 
+  /* Nouvelles sections */
+  .soutenir, .boutique, .remerciements { padding: 64px 0; }
+  .soutenir-card { padding: 24px 20px; }
+  .boutique-collection { padding: 24px 20px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .boutique-visuals { grid-template-columns: 1fr; }
+  .loto-gallery { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .atelier-gallery { grid-template-columns: repeat(2, 1fr); }
+  .remerciements-card { padding: 28px 22px; }
+  .remerciements-photos { flex-direction: row; gap: 12px; }
+
   /* FAB */
   .fab-don { bottom: 20px; right: 16px; width: 50px; height: 50px; font-size: 1.2rem; }
 }
@@ -837,6 +1039,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   .footer-logo-img { height: 44px; }
   .footer-links h4 { margin-bottom: 14px; }
   .footer-links ul { gap: 8px; }
+
+  /* Nouvelles sections mobile */
+  .soutenir, .boutique, .remerciements { padding: 48px 0; }
+  .loto-gallery { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .boutique-cta { padding: 24px 16px; }
+  .remerciements-photos { flex-direction: column; }
 
   /* Buttons */
   .btn-primary, .btn-secondary, .btn-outline { padding: 13px 22px; font-size: .9rem; }
