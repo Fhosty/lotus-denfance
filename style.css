@@ -67,6 +67,12 @@ em { color: var(--pink); font-style: normal; }
   box-shadow: 0 4px 16px rgba(200,91,138,.35);
 }
 .btn-primary:hover { background: #b04d7a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,91,138,.45); }
+.btn-green {
+  background: var(--green);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(45,106,79,.35);
+}
+.btn-green:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,106,79,.45); }
 .btn-secondary {
   background: rgba(255,255,255,.15);
   color: var(--white);
@@ -1013,6 +1019,27 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
 .merci-card h3 { color: var(--green-dark); font-size: 1.05rem; margin-bottom: 12px; }
 .merci-card p { color: var(--text-mid); font-size: .88rem; line-height: 1.7; }
 .merci-card strong { color: var(--text-dark); }
+.merci-sponsors-list {
+  list-style: none;
+  margin: 12px 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.merci-sponsors-list li { font-size: .85rem; color: var(--text-mid); line-height: 1.5; }
+.merci-sponsors-list strong { color: var(--green-dark); }
+.merci-partenariat {
+  margin-top: 14px;
+  font-size: .83rem;
+  color: var(--text-mid);
+  background: rgba(45,106,79,.07);
+  border-left: 3px solid var(--green);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  text-align: left;
+  line-height: 1.6;
+}
 
 .remerciements-photos img {
   width: 100%;
