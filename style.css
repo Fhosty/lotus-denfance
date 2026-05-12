@@ -475,9 +475,13 @@ em { color: var(--pink); font-style: normal; }
 .portrait-avatar {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
   margin-bottom: 20px;
 }
 .avatar-photo {
+  display: block;
   width: 96px;
   height: 96px;
   border-radius: 50%;
@@ -485,6 +489,7 @@ em { color: var(--pink); font-style: normal; }
   object-position: top center;
   border: 3px solid var(--pink-light);
   box-shadow: 0 4px 16px rgba(200,91,138,.25);
+  margin: 0 auto;
 }
 .avatar-placeholder {
   width: 96px;
