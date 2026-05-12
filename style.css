@@ -472,6 +472,15 @@ em { color: var(--pink); font-style: normal; }
   position: sticky;
   top: 90px;
 }
+.avatar-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 3px solid var(--pink-light);
+  box-shadow: 0 4px 16px rgba(200,91,138,.25);
+}
 .avatar-placeholder {
   width: 96px;
   height: 96px;
