@@ -473,13 +473,15 @@ em { color: var(--pink); font-style: normal; }
   top: 90px;
 }
 .avatar-photo {
+  display: block;
   width: 96px;
   height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: top;
+  object-position: top center;
   border: 3px solid var(--pink-light);
   box-shadow: 0 4px 16px rgba(200,91,138,.25);
+  margin: 0 auto 20px;
 }
 .avatar-placeholder {
   width: 96px;
