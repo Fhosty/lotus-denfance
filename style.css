@@ -308,16 +308,18 @@ em { color: var(--pink); font-style: normal; }
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
   border-radius: 8px;
   cursor: pointer;
   padding: 8px 10px;
   transition: var(--transition);
+  position: relative;
+  z-index: 1002;
 }
 .nav-toggle span {
   display: block;
-  width: 20px;
+  width: 22px;
   height: 2px;
   background: var(--white);
   border-radius: 2px;
@@ -328,10 +330,14 @@ em { color: var(--pink); font-style: normal; }
   border-color: #ddd;
 }
 #header.scrolled .nav-toggle span { background: var(--green-dark); }
+.nav-toggle.open {
+  background: rgba(255,255,255,.2);
+  border-color: rgba(255,255,255,.4);
+}
+.nav-toggle.open span { background: var(--white) !important; }
 .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-#header.scrolled .nav-toggle.open span { background: var(--white); }
 
 /* ===== HERO ===== */
 .hero {
@@ -1107,7 +1113,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
 
   /* Nav mobile */
   .nav-toggle { display: flex; }
-  .nav-cta { display: none; } /* caché desktop petit, affiché dans menu */
+  .nav-cta { display: none; }
+  /* Header toujours visible sur mobile */
+  #header {
+    background: rgba(27,67,50,.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  }
+  #header.scrolled {
+    background: rgba(255,255,255,.97);
+  }
   .nav-links {
     display: none;
     position: fixed;
