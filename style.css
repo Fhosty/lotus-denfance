@@ -1131,10 +1131,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
     backdrop-filter: blur(24px);
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     gap: 0;
     z-index: 1001;
-    padding: 12px 20px 40px;
+    padding: 8px 20px 16px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -1143,9 +1143,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   .nav-links > li:last-child { border-bottom: none; }
   .nav-links > li > a,
   .nav-dropdown-toggle {
-    padding: 15px 8px;
+    padding: 10px 8px;
     display: flex;
-    font-size: 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
     color: rgba(255,255,255,.9) !important;
     border-radius: 0;
     width: 100%;
