@@ -1126,29 +1126,33 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   .nav-links {
     display: none;
     position: fixed;
-    top: 64px; left: 0; right: 0; bottom: 0;
+    top: 64px;
+    left: 0; right: 0;
+    height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
     background: #1B4332;
     flex-direction: column;
     align-items: stretch;
     z-index: 1001;
-    overflow-y: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 24px 0;
   }
   .nav-links.open { display: flex; }
   .nav-links > li {
-    flex: 1;
+    flex-shrink: 0;
+    min-height: 58px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(255,255,255,.1);
-    min-height: 52px;
   }
   .nav-links > li:last-child { border-bottom: none; }
   .nav-links > li > a,
   .nav-dropdown-toggle {
     padding: 0 20px;
-    height: 100%;
+    min-height: 58px;
     width: 100%;
     display: flex;
     align-items: center;

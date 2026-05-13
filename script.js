@@ -32,13 +32,11 @@ function updateActiveNav() {
 navToggle.addEventListener('click', () => {
   const isOpen = navLinks.classList.toggle('open');
   navToggle.classList.toggle('open', isOpen);
-  document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 
 function closeMenu() {
   navLinks.classList.remove('open');
   navToggle.classList.remove('open');
-  document.body.style.overflow = '';
 }
 
 // Fermer sur clic lien
