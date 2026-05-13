@@ -1127,30 +1127,35 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
     display: none;
     position: fixed;
     top: 64px; left: 0; right: 0; bottom: 0;
-    background: rgba(22,56,41,.98);
-    backdrop-filter: blur(24px);
+    background: #1B4332;
     flex-direction: column;
     align-items: stretch;
-    justify-content: space-evenly;
-    gap: 0;
     z-index: 1001;
-    padding: 8px 20px 16px;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
   .nav-links.open { display: flex; }
-  .nav-links > li { border-bottom: 1px solid rgba(255,255,255,.07); }
+  .nav-links > li {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    min-height: 52px;
+  }
   .nav-links > li:last-child { border-bottom: none; }
   .nav-links > li > a,
   .nav-dropdown-toggle {
-    padding: 10px 8px;
+    padding: 0 20px;
+    height: 100%;
+    width: 100%;
     display: flex;
-    font-size: 1.05rem;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
     font-weight: 500;
     color: rgba(255,255,255,.9) !important;
-    border-radius: 0;
-    width: 100%;
-    justify-content: space-between;
     background: none !important;
   }
   .nav-links > li > a::after,
