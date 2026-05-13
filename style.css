@@ -18,6 +18,18 @@
   --radius:       14px;
   --radius-lg:    24px;
   --transition:   .3s cubic-bezier(.4,0,.2,1);
+
+  /* ── Boutique CTA buttons ── */
+  --btn-bq-radius:      50px;
+  --btn-bq-padding:     15px 34px;
+  --btn-bq-font-size:   .95rem;
+  --btn-bq-font-weight: 600;
+  --btn-bq-gap:         10px;
+  --btn-bq-transition:  .25s cubic-bezier(.4,0,.2,1);
+  --btn-bq-primary-bg:  #C85B8A;
+  --btn-bq-primary-hover: #b04d7a;
+  --btn-bq-outline-border: rgba(255,255,255,.55);
+  --btn-bq-outline-hover-bg: rgba(255,255,255,.12);
 }
 
 /* ===== RESET ===== */
@@ -968,7 +980,82 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255,255,255,.1);
 }
-.boutique-cta p { color: rgba(255,255,255,.7); margin-bottom: 20px; font-size: .92rem; }
+.boutique-cta p { color: rgba(255,255,255,.7); margin-bottom: 24px; font-size: .92rem; }
+
+/* ── Boutique CTA : groupe de boutons ── */
+.boutique-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+/* Base commune aux deux boutons */
+.btn-boutique-primary,
+.btn-boutique-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--btn-bq-gap);
+  padding: var(--btn-bq-padding);
+  border-radius: var(--btn-bq-radius);
+  font-size: var(--btn-bq-font-size);
+  font-weight: var(--btn-bq-font-weight);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: .01em;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform var(--btn-bq-transition),
+    box-shadow var(--btn-bq-transition),
+    background var(--btn-bq-transition),
+    border-color var(--btn-bq-transition),
+    color var(--btn-bq-transition);
+  white-space: nowrap;
+}
+.btn-boutique-primary svg,
+.btn-boutique-outline svg { flex-shrink: 0; }
+
+/* Bouton principal — Commander */
+.btn-boutique-primary {
+  background: linear-gradient(135deg, var(--btn-bq-primary-bg) 0%, #a84870 100%);
+  color: var(--white);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 20px rgba(200,91,138,.38);
+}
+.btn-boutique-primary:hover {
+  background: linear-gradient(135deg, #d46898 0%, var(--btn-bq-primary-bg) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(200,91,138,.5);
+}
+.btn-boutique-primary:active { transform: translateY(-1px); }
+
+/* Bouton secondaire — Catalogue */
+.btn-boutique-outline {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid var(--btn-bq-outline-border);
+}
+.btn-boutique-outline:hover {
+  background: var(--btn-bq-outline-hover-bg);
+  border-color: rgba(255,255,255,.9);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.15);
+}
+.btn-boutique-outline:active { transform: translateY(-1px); }
+
+/* Mobile : empilement */
+@media (max-width: 520px) {
+  .boutique-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-boutique-primary,
+  .btn-boutique-outline {
+    width: 100%;
+    max-width: 320px;
+  }
+}
 
 /* ===== BANDEAU GOODIES EN ÉVÉNEMENT ===== */
 .boutique-event-info {
