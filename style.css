@@ -1126,16 +1126,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   .nav-links {
     display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(22,56,41,.97);
+    top: 64px; left: 0; right: 0; bottom: 0;
+    background: rgba(22,56,41,.98);
     backdrop-filter: blur(24px);
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-    z-index: 998;
-    padding: 88px 24px 40px;
+    z-index: 1001;
+    padding: 12px 20px 40px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .nav-links.open { display: flex; }
   .nav-links > li { border-bottom: 1px solid rgba(255,255,255,.07); }
