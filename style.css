@@ -1156,7 +1156,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
   /* Dropdown en mobile = accordéon */
   .nav-dropdown {
     position: static;
-    transform: none;
+    transform: none !important;
     box-shadow: none;
     border: none;
     background: rgba(255,255,255,.05);
@@ -1165,6 +1165,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
     padding: 4px;
     min-width: auto;
     width: 100%;
+  }
+  .nav-has-dropdown.open .nav-dropdown {
+    display: block;
+    animation: none !important;
+    transform: none !important;
   }
   .nav-dropdown::before { display: none; }
   .nav-dropdown li a {
