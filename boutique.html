@@ -44,14 +44,11 @@
   <style>
     body { font-family:'Inter',system-ui,sans-serif; }
     h1,h2,h3,.font-serif { font-family:'Playfair Display',Georgia,serif; }
-
     .card-lift { transition: transform .28s cubic-bezier(.4,0,.2,1), box-shadow .28s; }
     .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.12); }
     .btn-pulse:hover { transform: translateY(-2px); }
-
     .hero-bg   { background: linear-gradient(135deg,#1B4332 0%,#2D6A4F 55%,#40916C 100%); }
     .viet-bg   { background: linear-gradient(150deg,#1B4332 0%,#162e24 100%); }
-
     .step-num {
       background: linear-gradient(135deg,#2D6A4F,#52B788);
       width:52px; height:52px; border-radius:50%;
@@ -61,7 +58,6 @@
       margin:0 auto 14px; transition: transform .2s;
     }
     .step-num:hover { transform:scale(1.1); }
-
     .badge-lim {
       display:inline-block; background:#C85B8A; color:#fff;
       font-size:.68rem; font-weight:700; letter-spacing:.08em;
@@ -72,13 +68,9 @@
       font-size:.68rem; font-weight:700; letter-spacing:.08em;
       text-transform:uppercase; padding:4px 12px; border-radius:50px;
     }
-
     #topbar { box-shadow:0 1px 0 rgba(0,0,0,.07); }
-
     .reveal { opacity:0; transform:translateY(20px); transition:opacity .5s ease, transform .5s ease; }
     .reveal.on { opacity:1; transform:none; }
-
-    /* Taille pills */
     .size-pill {
       display:inline-block; font-size:.6rem; font-weight:600;
       border:1px solid #d1d5db; border-radius:4px;
@@ -86,670 +78,839 @@
     }
     .color-dot {
       display:inline-block; width:14px; height:14px;
-      border-radius:50%; border:1.5px solid #d1d5db;
-      vertical-align:middle;
+      border-radius:50%; border:1.5px solid #d1d5db; vertical-align:middle;
+    }
+    /* Panier drawer */
+    #cart-drawer {
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    /* Options modal opt buttons */
+    .size-opt.selected, .color-opt.selected {
+      background:#2D6A4F; color:#fff; border-color:#2D6A4F;
+    }
+    /* Toast */
+    #cart-toast {
+      transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .35s;
     }
   </style>
 </head>
 
 <body class="bg-[#F9F5F0] text-gray-800 antialiased">
 
-  <!-- ════════════════════════ HEADER ════════════════════════ -->
-  <header id="topbar" class="bg-white/96 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-5 h-[66px] flex items-center justify-between gap-4">
-
-      <a href="index.html" class="flex items-center gap-3 flex-shrink-0 group">
-        <img src="Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance"
-             class="h-10 w-auto object-contain transition group-hover:scale-105" />
-        <div class="hidden sm:block leading-tight">
-          <div class="font-serif font-bold text-[#1B4332] text-[.95rem]">Lotus d'Enfance</div>
-          <div class="text-[.6rem] text-gray-400 tracking-widest uppercase">Association humanitaire</div>
-        </div>
+<!-- ════ HEADER ════ -->
+<header id="topbar" class="bg-white/96 backdrop-blur-md sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-5 h-[66px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 flex-shrink-0 group">
+      <img src="Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance" class="h-10 w-auto object-contain transition group-hover:scale-105" />
+      <div class="hidden sm:block leading-tight">
+        <div class="font-serif font-bold text-[#1B4332] text-[.95rem]">Lotus d'Enfance</div>
+        <div class="text-[.6rem] text-gray-400 tracking-widest uppercase">Association humanitaire</div>
+      </div>
+    </a>
+    <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+      <a href="#permanente"        class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-[#2D6A4F] hover:bg-[#F9F5F0] transition">Collection permanente</a>
+      <a href="#limitee"           class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-[#C85B8A] hover:bg-[#F9F5F0] transition">Collection limitée</a>
+      <a href="#comment-commander" class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-[#2D6A4F] hover:bg-[#F9F5F0] transition">Commander</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <button onclick="openCart()" class="relative flex items-center gap-1.5 bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-sm font-semibold px-4 py-2 rounded-full shadow transition btn-pulse">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Panier
+        <span id="cart-count" class="hidden bg-[#C85B8A] text-white text-[.6rem] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">0</span>
+      </button>
+      <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener"
+         class="btn-pulse bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md transition">
+        ❤ Don
       </a>
+      <a href="index.html" class="hidden sm:inline-flex items-center gap-1 text-sm text-[#2D6A4F] hover:text-[#C85B8A] transition font-medium">← Site</a>
+    </div>
+  </div>
+</header>
 
-      <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-        <a href="#permanente"      class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-[#2D6A4F] hover:bg-[#F9F5F0] transition">Collection permanente</a>
-        <a href="#limitee"         class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-[#C85B8A] hover:bg-[#F9F5F0] transition">Collection limitée</a>
-        <a href="#comment-commander" class="px-3 py-1.5 rounded-lg text-gray-600 hover:text-[#2D6A4F] hover:bg-[#F9F5F0] transition">Commander</a>
-      </nav>
 
-      <div class="flex items-center gap-2">
-        <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2"
-           target="_blank" rel="noopener"
-           class="btn-pulse bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md shadow-pink-900/20 transition">
-          ❤ Faire un don
-        </a>
-        <a href="index.html"
-           class="hidden sm:inline-flex items-center gap-1 text-sm text-[#2D6A4F] hover:text-[#C85B8A] transition font-medium">
-          ← Site
-        </a>
+<!-- ════ HERO ════ -->
+<section class="hero-bg text-white overflow-hidden relative">
+  <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
+    <div class="absolute -right-16 top-1/2 -translate-y-1/2 text-[22rem] opacity-[.04] leading-none">🌸</div>
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse at 25% 60%,rgba(200,91,138,.18) 0%,transparent 55%)"></div>
+  </div>
+  <div class="max-w-6xl mx-auto px-5 py-20 md:py-28 relative z-10 flex flex-col md:flex-row items-center gap-12">
+    <div class="flex-1 text-center md:text-left">
+      <span class="inline-block bg-white/15 border border-white/25 text-white/90 text-xs font-semibold tracking-wider uppercase px-4 py-2 rounded-full mb-6">Boutique solidaire</span>
+      <h1 class="font-serif font-bold text-4xl md:text-5xl leading-tight mb-5">
+        Portez nos couleurs,<br /><span class="text-[#F4B8D1]">changez une vie</span>
+      </h1>
+      <p class="text-white/80 text-lg leading-relaxed mb-8 max-w-[520px]">
+        Ajoutez vos articles au panier, ou commandez directement <strong class="text-white">par e-mail</strong>. Chaque achat finance les enfants défavorisés du Vietnam.
+      </p>
+      <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+        <a href="#permanente" class="btn-pulse bg-[#2D6A4F] hover:bg-[#245a42] border border-white/20 text-white font-semibold px-7 py-3.5 rounded-full shadow-lg transition">Collection permanente ↓</a>
+        <a href="#limitee"    class="btn-pulse bg-[#C85B8A] hover:bg-[#b04d7a] text-white font-semibold px-7 py-3.5 rounded-full shadow-lg transition">Collection limitée ↓</a>
       </div>
     </div>
-  </header>
-
-
-  <!-- ════════════════════════ HERO ════════════════════════ -->
-  <section class="hero-bg text-white overflow-hidden relative">
-    <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
-      <div class="absolute -right-16 top-1/2 -translate-y-1/2 text-[22rem] opacity-[.04] leading-none">🌸</div>
-      <div class="absolute inset-0" style="background:radial-gradient(ellipse at 25% 60%,rgba(200,91,138,.18) 0%,transparent 55%)"></div>
+    <div class="flex-shrink-0 w-full md:w-[340px]">
+      <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-4 shadow-2xl">
+        <img src="Photo_Lotus/Merch/67cfc13d-81d9-47ae-981e-22b60795ddf3.jfif" alt="Stand boutique Lotus d'Enfance" class="w-full rounded-2xl object-cover aspect-[4/3]" loading="eager" />
+        <p class="text-white/60 text-center text-xs mt-3 italic">Notre stand lors du loto caritatif 🌸</p>
+      </div>
     </div>
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 h-12 bg-white" style="clip-path:ellipse(55% 100% at 50% 100%)"></div>
+</section>
 
-    <div class="max-w-6xl mx-auto px-5 py-20 md:py-28 relative z-10
-                flex flex-col md:flex-row items-center gap-12">
 
-      <div class="flex-1 text-center md:text-left">
-        <span class="inline-block bg-white/15 border border-white/25 text-white/90
-                     text-xs font-semibold tracking-wider uppercase px-4 py-2 rounded-full mb-6">
-          Boutique solidaire
-        </span>
-        <h1 class="font-serif font-bold text-4xl md:text-5xl leading-tight mb-5">
-          Portez nos couleurs,<br />
-          <span class="text-[#F4B8D1]">changez une vie</span>
-        </h1>
-        <p class="text-white/80 text-lg leading-relaxed mb-8 max-w-[520px]">
-          Commandez vos articles préférés <strong class="text-white">par e-mail</strong>
-          pour soutenir nos actions. Chaque achat finance directement
-          les enfants défavorisés du Vietnam.
-        </p>
-        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-          <a href="#permanente"
-             class="btn-pulse bg-[#2D6A4F] hover:bg-[#245a42] border border-white/20 text-white font-semibold
-                    px-7 py-3.5 rounded-full shadow-lg transition">
-            Collection permanente ↓
-          </a>
-          <a href="#limitee"
-             class="btn-pulse bg-[#C85B8A] hover:bg-[#b04d7a] text-white font-semibold
-                    px-7 py-3.5 rounded-full shadow-lg shadow-pink-900/30 transition">
-            Collection limitée ↓
-          </a>
+<!-- ════ MISSION BANNER ════ -->
+<section class="bg-white py-8">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="rounded-2xl overflow-hidden shadow-md">
+      <img src="Photo_Lotus/812cb257-a3ee-4fec-82d0-cdbc575dc341.jfif" alt="Équipe Lotus d'Enfance" class="w-full object-cover max-h-64 object-top" loading="lazy" />
+    </div>
+    <p class="text-center text-gray-500 text-sm mt-3 italic">
+      L'équipe Lotus d'Enfance sur le terrain — <strong class="text-[#2D6A4F]">1 € = 1 repas pour un enfant</strong>
+    </p>
+  </div>
+</section>
+
+
+<!-- ════ COMMENT COMMANDER ════ -->
+<section id="comment-commander" class="bg-white py-16 md:py-20">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-[#F4B8D1]/40 text-[#C85B8A] text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">Simple &amp; rapide</span>
+      <h2 class="font-serif font-bold text-3xl md:text-4xl text-[#1B4332]">Comment commander ?</h2>
+      <p class="text-gray-500 mt-3 max-w-md mx-auto">Deux options : directement par e-mail ou via le panier.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div class="reveal text-center"><div class="step-num">1</div>
+        <div class="bg-[#F9F5F0] rounded-2xl p-6 hover:shadow-md transition">
+          <div class="text-4xl mb-3">🛍️</div>
+          <h3 class="font-serif font-bold text-[#1B4332] text-lg mb-2">Choisissez</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Parcourez la collection et cliquez sur "Commander" ou "Ajouter au panier".</p>
         </div>
       </div>
-
-      <div class="flex-shrink-0 w-full md:w-[340px]">
-        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-4 shadow-2xl">
-          <img src="Photo_Lotus/Merch/67cfc13d-81d9-47ae-981e-22b60795ddf3.jfif"
-               alt="Stand boutique Lotus d'Enfance lors du loto caritatif"
-               class="w-full rounded-2xl object-cover aspect-[4/3]" loading="eager" />
-          <p class="text-white/60 text-center text-xs mt-3 italic">
-            Notre stand lors du loto caritatif 🌸
-          </p>
+      <div class="reveal text-center"><div class="step-num">2</div>
+        <div class="bg-[#F9F5F0] rounded-2xl p-6 hover:shadow-md transition">
+          <div class="text-4xl mb-3">🛒</div>
+          <h3 class="font-serif font-bold text-[#1B4332] text-lg mb-2">Composez votre panier</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Ajoutez plusieurs articles, choisissez taille et coloris, puis finalisez en un clic.</p>
+        </div>
+      </div>
+      <div class="reveal text-center"><div class="step-num">3</div>
+        <div class="bg-[#F9F5F0] rounded-2xl p-6 hover:shadow-md transition">
+          <div class="text-4xl mb-3">📧</div>
+          <h3 class="font-serif font-bold text-[#1B4332] text-lg mb-2">On vous recontacte</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Un e-mail récapitulatif part automatiquement. Nous confirmons et organisons la livraison.</p>
         </div>
       </div>
     </div>
+    <div class="mt-8 bg-[#F9F5F0] rounded-2xl px-6 py-4 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-sm text-gray-600 reveal">
+      <span class="flex items-center gap-2">📦 <strong>Livraison offerte</strong></span>
+      <span class="hidden md:block text-gray-300">|</span>
+      <span class="flex items-center gap-2">🏪 Aussi disponibles <strong>lors de nos événements</strong></span>
+      <span class="hidden md:block text-gray-300">|</span>
+      <span class="flex items-center gap-2">💚 <strong>100 %</strong> des bénéfices reversés</span>
+    </div>
+  </div>
+</section>
 
-    <div class="absolute bottom-0 left-0 right-0 h-12 bg-white"
-         style="clip-path:ellipse(55% 100% at 50% 100%)"></div>
-  </section>
+
+<!-- ════ COLLECTION PERMANENTE ════ -->
+<section id="permanente" class="py-16 md:py-20 bg-[#F9F5F0]">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-12 reveal">
+      <span class="badge-perm mb-4 inline-block">🛍️ Loto association</span>
+      <h2 class="font-serif font-bold text-3xl md:text-4xl text-[#1B4332] mt-2">Collection permanente</h2>
+      <p class="text-gray-500 mt-3">Articles disponibles toute l'année — vendus lors de notre loto association</p>
+    </div>
+    <div class="mb-10 rounded-3xl overflow-hidden shadow-lg max-w-2xl mx-auto reveal">
+      <img src="Photo_Lotus/Merch/3c642bed-13b3-46c5-a784-86e341d2cf44.jfif" alt="Catalogue Lotus d'Enfance" class="w-full object-cover" loading="lazy" />
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+
+      <!-- T-shirt manches courtes -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Tee_shirt_recto.jfif" alt="T-shirt manches courtes" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">T-shirt manches courtes</h3>
+          <p class="text-gray-400 text-xs mb-1">Unisexe · Logo Lotus</p>
+          <div class="flex gap-1 flex-wrap mb-1">
+            <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
+            <span class="color-dot bg-white"></span> Blanc <span class="color-dot bg-gray-900 ml-1"></span> Noir
+          </div>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20manches%20courtes&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20manches%20courtes%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20(Blanc%2FNoir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="openOptionsModal('T-shirt manches courtes',25,['S','M','L','XL','2XL'],['Blanc','Noir'])"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- T-shirt gros logo -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Tee_shirt_Gros_Logo.jfif" alt="T-shirt gros logo" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">T-shirt gros logo</h3>
+          <p class="text-gray-400 text-xs mb-1">Unisexe · Grand logo imprimé</p>
+          <div class="flex gap-1 flex-wrap mb-1">
+            <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
+            <span class="color-dot bg-white"></span> Blanc <span class="color-dot bg-gray-900 ml-1"></span> Noir
+          </div>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20gros%20logo&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20gros%20logo%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20(Blanc%2FNoir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="openOptionsModal('T-shirt gros logo',25,['S','M','L','XL','2XL'],['Blanc','Noir'])"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Parka permanente -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Photo_Parka.jpg" alt="Parka bleue Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Parka</h3>
+          <p class="text-gray-400 text-xs mb-1">Coupe confort</p>
+          <div class="flex gap-1 flex-wrap mb-1">
+            <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
+            <span class="color-dot bg-blue-600 border-blue-400"></span> Bleu
+          </div>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">75 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Parka%20collection%20permanente&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Parka%20(75%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20%3A%20Bleu%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="openOptionsModal('Parka (collection permanente)',75,['S','M','L','XL','2XL'],['Bleu'])"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Casquette interactive -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img id="casq-perm-img" src="Photo_Lotus/Merch/Casquette2.jfif" alt="Casquette Lotus d'Enfance" class="w-full object-cover aspect-square transition-opacity duration-200" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Casquette</h3>
+          <p class="text-gray-400 text-xs mb-1">Taille unique · Logo Lotus</p>
+          <div class="flex items-center gap-2 mb-auto" id="casq-perm-dots">
+            <button onclick="switchCasq('Casquette2.jfif','Bleu',this)" title="Bleu"
+                    class="casq-btn w-5 h-5 rounded-full bg-blue-500 border-2 border-blue-300 cursor-pointer hover:scale-110 transition"
+                    style="outline:2px solid #3b82f6;outline-offset:2px;"></button>
+            <button onclick="switchCasq('Casquette3.jfif','Rose clair',this)" title="Rose clair"
+                    class="casq-btn w-5 h-5 rounded-full bg-[#F4B8D1] border-2 border-[#C85B8A] cursor-pointer hover:scale-110 transition"></button>
+          </div>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
+            <a id="casq-perm-link"
+               href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Casquette%20(Bleu)&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Casquette%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AColoris%20%3A%20Bleu%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addCasqToCart()"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Bob -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Bob.jfif" alt="Bob Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Bob</h3>
+          <p class="text-gray-400 text-xs mb-auto">Taille unique · Logo Lotus</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Bob&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Bob%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Bob',25,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sac à dos -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Sac_a_dos_bleu.jfif" alt="Sac à dos Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Sac à dos</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">45 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sac%20%C3%A0%20dos&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Sac%20%C3%A0%20dos%20(45%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Sac à dos',45,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mini Sac à main -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Mini_Sac_a_main.jfif" alt="Mini Sac à main Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Mini Sac à main</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">30 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Mini%20Sac%20%C3%A0%20main&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Mini%20Sac%20%C3%A0%20main%20(30%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Mini Sac à main',30,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tote Bag -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Tote_Bag1.jfif" alt="Tote Bag Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Tote Bag</h3>
+          <p class="text-gray-400 text-xs mb-auto">Coton · Logo imprimé</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">15 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Tote%20Bag&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Tote%20Bag%20(15%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Tote Bag',15,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Porte-cartes -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Porte_carte1.png" alt="Porte-cartes Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Porte-cartes</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Porte-cartes&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Porte-cartes%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Porte-cartes',25,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mini Porte-Clé -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Photo_Porte_Cle.jfif" alt="Mini Porte-Clé Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Mini Porte-Clé</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">5 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Mini%20Porte-Cl%C3%A9&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Mini%20Porte-Cl%C3%A9%20(5%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Mini Porte-Clé',5,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Lampe Torche -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Lampe_Torche.png" alt="Lampe Torche Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Lampe Torche</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">10 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Lampe%20Torche&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Lampe%20Torche%20(10%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Lampe Torche',10,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Thermos -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Thermos.png" alt="Thermos Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Thermos</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">Prix à venir</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Int%C3%A9r%C3%AAt%20%3A%20Thermos&body=Bonjour%2C%0A%0AJe%20suis%20int%C3%A9ress%C3%A9(e)%20par%20le%20Thermos.%0AMerci%20de%20me%20communiquer%20le%20prix.%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0ATél%20%3A%20%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#2D6A4F] hover:bg-[#1B4332] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Me prévenir</a>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /grille permanente -->
+  </div>
+</section>
 
 
-  <!-- ════════════════════════ MISSION BANNER ════════════════════════ -->
-  <section class="bg-white py-8">
-    <div class="max-w-5xl mx-auto px-5">
-      <div class="rounded-2xl overflow-hidden shadow-md">
-        <img src="Photo_Lotus/812cb257-a3ee-4fec-82d0-cdbc575dc341.jfif"
-             alt="Équipe Lotus d'Enfance — Mission 1€ = 1 repas"
-             class="w-full object-cover max-h-64 object-top" loading="lazy" />
-      </div>
-      <p class="text-center text-gray-500 text-sm mt-3 italic">
-        L'équipe Lotus d'Enfance sur le terrain — <strong class="text-[#2D6A4F]">1 € = 1 repas pour un enfant</strong>
+<!-- ════ COLLECTION LIMITÉE ════ -->
+<section id="limitee" class="viet-bg py-16 md:py-20 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse at 80% 50%,rgba(200,91,138,.12) 0%,transparent 60%)"></div>
+  <div class="max-w-6xl mx-auto px-5 relative z-10">
+    <div class="text-center mb-12 reveal">
+      <span class="badge-lim mb-4 inline-block">🌟 Loto Vietnam 2026</span>
+      <h2 class="font-serif font-bold text-3xl md:text-4xl text-white mt-2">Collection limitée</h2>
+      <p class="text-white/70 mt-3 max-w-lg mx-auto">
+        <strong class="text-white">Édition spéciale — Mission Vietnam 2026.</strong><br />
+        Vendue lors de notre loto caritatif Vietnam. Chaque article finance directement un repas pour un enfant.
       </p>
     </div>
-  </section>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto mb-12 reveal">
+      <img src="Photo_Lotus/Merch/56e2f697-c6d8-4ab5-8917-0b63f6a880f5.jfif" alt="Lookbook Collection limitée" class="w-full rounded-2xl object-cover aspect-[4/3] border border-white/10 shadow-lg" loading="lazy" />
+      <img src="Photo_Lotus/Merch/photo_ty_ed_limite.jfif" alt="T-shirt édition limitée" class="w-full rounded-2xl object-contain aspect-[4/3] border border-white/10 shadow-lg bg-white/5" loading="lazy" />
+    </div>
 
-  <!-- ════════════════════════ COMMENT COMMANDER ════════════════════════ -->
-  <section id="comment-commander" class="bg-white py-16 md:py-20">
-    <div class="max-w-5xl mx-auto px-5">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
 
-      <div class="text-center mb-12 reveal">
-        <span class="inline-block bg-[#F4B8D1]/40 text-[#C85B8A] text-xs font-bold
-                     tracking-widest uppercase px-4 py-1.5 rounded-full mb-4">
-          Simple &amp; rapide
-        </span>
-        <h2 class="font-serif font-bold text-3xl md:text-4xl text-[#1B4332]">Comment commander ?</h2>
-        <p class="text-gray-500 mt-3 max-w-md mx-auto text-base">
-          Pas de panier, pas de compte à créer. Un e-mail suffit.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <div class="reveal text-center">
-          <div class="step-num">1</div>
-          <div class="bg-[#F9F5F0] rounded-2xl p-6 hover:shadow-md transition">
-            <div class="text-4xl mb-3">🛍️</div>
-            <h3 class="font-serif font-bold text-[#1B4332] text-lg mb-2">Choisissez</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">
-              Parcourez notre catalogue et repérez l'article qui vous plaît.
-            </p>
+      <!-- T-shirt limitée -->
+      <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Photo_Tee_Shirt2.jfif" alt="T-shirt collection limitée" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
+          <h3 class="font-semibold text-white text-sm leading-snug mb-1">T-shirt manches courtes</h3>
+          <div class="flex gap-1 flex-wrap mb-1">
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">S</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">M</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">L</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">XL</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">2XL</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-white/60 mb-auto">
+            <span class="color-dot bg-white"></span> Blanc <span class="color-dot bg-gray-900 ml-1 border-white/30"></span> Noir
+          </div>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#F4B8D1] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20Collection%20limit%C3%A9e&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20Collection%20limit%C3%A9e%20Vietnam%202026%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20(Blanc%2FNoir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition">📧 Commander</a>
+            <button onclick="openOptionsModal('T-shirt (collection limitée)',25,['S','M','L','XL','2XL'],['Blanc','Noir'])"
+                    class="btn-pulse w-full text-center border border-white/50 text-white hover:bg-white/20 text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
-        <div class="reveal text-center">
-          <div class="step-num">2</div>
-          <div class="bg-[#F9F5F0] rounded-2xl p-6 hover:shadow-md transition">
-            <div class="text-4xl mb-3">📧</div>
-            <h3 class="font-serif font-bold text-[#1B4332] text-lg mb-2">Cliquez "Commander"</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">
-              Un e-mail pré-rempli s'ouvre automatiquement. Renseignez vos coordonnées, taille et coloris souhaités.
-            </p>
+      </article>
+
+      <!-- Parka limitée -->
+      <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Parka_noir_recto.jfif" alt="Parka noire collection limitée" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
+          <h3 class="font-semibold text-white text-sm leading-snug mb-1">Parka</h3>
+          <div class="flex gap-1 flex-wrap mb-1">
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">S</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">M</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">L</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">XL</span>
+            <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">2XL</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-white/60 mb-auto">
+            <span class="color-dot bg-gray-900 border-white/30"></span> Noir
+          </div>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#F4B8D1] text-xl font-bold">75 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Parka%20Collection%20limit%C3%A9e&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Parka%20Collection%20limit%C3%A9e%20Vietnam%202026%20(75%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20%3A%20Noir%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition">📧 Commander</a>
+            <button onclick="openOptionsModal('Parka (collection limitée)',75,['S','M','L','XL','2XL'],['Noir'])"
+                    class="btn-pulse w-full text-center border border-white/50 text-white hover:bg-white/20 text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
-        <div class="reveal text-center">
-          <div class="step-num">3</div>
-          <div class="bg-[#F9F5F0] rounded-2xl p-6 hover:shadow-md transition">
-            <div class="text-4xl mb-3">🤝</div>
-            <h3 class="font-serif font-bold text-[#1B4332] text-lg mb-2">On vous recontacte</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">
-              Nous confirmons votre commande et vous communiquons les modalités de paiement.
-            </p>
+      </article>
+
+      <!-- Casquette limitée -->
+      <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Casquette1.jfif" alt="Casquette collection limitée" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
+          <h3 class="font-semibold text-white text-sm leading-snug mb-1">Casquette</h3>
+          <p class="text-white/50 text-xs mb-auto">Taille unique</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#F4B8D1] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Casquette%20Collection%20limit%C3%A9e&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Casquette%20Collection%20limit%C3%A9e%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition">📧 Commander</a>
+            <button onclick="addToCart('Casquette (collection limitée)',25,'','')"
+                    class="btn-pulse w-full text-center border border-white/50 text-white hover:bg-white/20 text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="mt-8 bg-[#F9F5F0] rounded-2xl px-6 py-4 flex flex-wrap items-center
-                  justify-center gap-4 md:gap-8 text-sm text-gray-600 reveal">
-        <span class="flex items-center gap-2">📦 <span><strong>Livraison offerte</strong></span></span>
-        <span class="hidden md:block text-gray-300">|</span>
-        <span class="flex items-center gap-2">🏪 <span>Aussi disponibles <strong>lors de nos événements</strong></span></span>
-        <span class="hidden md:block text-gray-300">|</span>
-        <span class="flex items-center gap-2">💚 <span><strong>100 %</strong> des bénéfices reversés</span></span>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ════════════════════════ COLLECTION PERMANENTE ════════════════════════ -->
-  <section id="permanente" class="py-16 md:py-20 bg-[#F9F5F0]">
-    <div class="max-w-6xl mx-auto px-5">
-
-      <div class="text-center mb-12 reveal">
-        <span class="badge-perm mb-4 inline-block">🛍️ Loto association</span>
-        <h2 class="font-serif font-bold text-3xl md:text-4xl text-[#1B4332] mt-2">Collection permanente</h2>
-        <p class="text-gray-500 mt-3">Articles disponibles toute l'année — vendus lors de notre loto association</p>
-      </div>
-
-      <!-- Photo catalogue -->
-      <div class="mb-10 rounded-3xl overflow-hidden shadow-lg max-w-2xl mx-auto reveal">
-        <img src="Photo_Lotus/Merch/3c642bed-13b3-46c5-a784-86e341d2cf44.jfif"
-             alt="Catalogue Collection Lotus d'Enfance"
-             class="w-full object-cover" loading="lazy" />
-      </div>
-
-      <!-- Grille produits permanents -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-
-        <!-- T-shirt manches courtes -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Tee_shirt_recto.jfif" alt="T-shirt manches courtes Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">T-shirt manches courtes</h3>
-            <p class="text-gray-400 text-xs mb-1">Unisexe · Logo Lotus</p>
-            <div class="flex gap-1 flex-wrap mb-1">
-              <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
-              <span class="color-dot bg-white"></span> Blanc
-              <span class="color-dot bg-gray-900 ml-1"></span> Noir
-            </div>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20manches%20courtes&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20manches%20courtes%20Lotus%20d%27Enfance%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%20%2F%20M%20%2F%20L%20%2F%20XL%20%2F%202XL)%20%3A%20%0AColoris%20(Blanc%20%2F%20Noir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
+      <!-- Sac à dos limitée -->
+      <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Sac_a_dos_noir.jfif" alt="Sac à dos collection limitée" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
+          <h3 class="font-semibold text-white text-sm leading-snug mb-1">Sac à dos</h3>
+          <p class="text-white/50 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#F4B8D1] text-xl font-bold">45 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sac%20%C3%A0%20dos%20Collection%20limit%C3%A9e&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Sac%20%C3%A0%20dos%20Collection%20limit%C3%A9e%20(45%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition">📧 Commander</a>
+            <button onclick="addToCart('Sac à dos (collection limitée)',45,'','')"
+                    class="btn-pulse w-full text-center border border-white/50 text-white hover:bg-white/20 text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <!-- T-shirt gros logo -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Tee_shirt_Gros_Logo.jfif" alt="T-shirt gros logo Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">T-shirt gros logo</h3>
-            <p class="text-gray-400 text-xs mb-1">Unisexe · Grand logo imprimé</p>
-            <div class="flex gap-1 flex-wrap mb-1">
-              <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
-              <span class="color-dot bg-white"></span> Blanc
-              <span class="color-dot bg-gray-900 ml-1"></span> Noir
-            </div>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20gros%20logo&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20gros%20logo%20Lotus%20d%27Enfance%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%20%2F%20M%20%2F%20L%20%2F%20XL%20%2F%202XL)%20%3A%20%0AColoris%20(Blanc%20%2F%20Noir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
+      <!-- Sacoche -->
+      <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Sacoche_Noir.jfif" alt="Sacoche collection limitée" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
+          <h3 class="font-semibold text-white text-sm leading-snug mb-1">Sacoche</h3>
+          <p class="text-white/50 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#F4B8D1] text-xl font-bold">30 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sacoche%20Collection%20limit%C3%A9e&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Sacoche%20Collection%20limit%C3%A9e%20(30%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition">📧 Commander</a>
+            <button onclick="addToCart('Sacoche (collection limitée)',30,'','')"
+                    class="btn-pulse w-full text-center border border-white/50 text-white hover:bg-white/20 text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <!-- Parka permanente (Bleu) -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Photo_Parka.jpg" alt="Parka bleue Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Parka</h3>
-            <p class="text-gray-400 text-xs mb-1">Coupe confort</p>
-            <div class="flex gap-1 flex-wrap mb-1">
-              <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
-              <span class="color-dot bg-blue-600 border-blue-400"></span> Bleu
-            </div>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">75 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Parka%20collection%20permanente&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Parka%20Lotus%20d%27Enfance%20-%20Collection%20permanente%20(75%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%20%2F%20M%20%2F%20L%20%2F%20XL%20%2F%202XL)%20%3A%20%0AColoris%20%3A%20Bleu%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
+      <!-- Porte-cartes limitée -->
+      <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Porte_Carte2.png" alt="Porte-cartes collection limitée" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
+          <h3 class="font-semibold text-white text-sm leading-snug mb-1">Porte-cartes</h3>
+          <p class="text-white/50 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#F4B8D1] text-xl font-bold">25 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Porte-cartes%20Collection%20limit%C3%A9e&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Porte-cartes%20Collection%20limit%C3%A9e%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition">📧 Commander</a>
+            <button onclick="addToCart('Porte-cartes (collection limitée)',25,'','')"
+                    class="btn-pulse w-full text-center border border-white/50 text-white hover:bg-white/20 text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
-        </article>
+        </div>
+      </article>
 
-        <!-- Casquette (coloris interactif) -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img id="casq-perm-img" src="Photo_Lotus/Merch/Casquette2.jfif"
-               alt="Casquette Lotus d'Enfance"
-               class="w-full object-cover aspect-square transition-opacity duration-200" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Casquette</h3>
-            <p class="text-gray-400 text-xs mb-1">Taille unique · Logo Lotus</p>
-            <!-- Sélecteur coloris -->
-            <div class="flex items-center gap-2 mb-auto" id="casq-perm-dots">
-              <button onclick="switchCasq('Casquette2.jfif','Bleu',this)"
-                      title="Bleu"
-                      class="casq-btn w-5 h-5 rounded-full bg-blue-500 border-2 border-blue-300 cursor-pointer hover:scale-110 transition"
-                      style="outline:2px solid #3b82f6;outline-offset:2px;"></button>
-              <button onclick="switchCasq('Casquette3.jfif','Rose clair',this)"
-                      title="Rose clair"
-                      class="casq-btn w-5 h-5 rounded-full bg-[#F4B8D1] border-2 border-[#C85B8A] cursor-pointer hover:scale-110 transition"></button>
-            </div>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">25 €</div>
-              <a id="casq-perm-link"
-                 href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Casquette%20(Bleu)&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Casquette%20Lotus%20d%27Enfance%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AColoris%20%3A%20Bleu%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Bob -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Bob.jfif" alt="Bob Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Bob</h3>
-            <p class="text-gray-400 text-xs mb-auto">Taille unique · Logo Lotus</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Bob&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Bob%20Lotus%20d%27Enfance%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Sac à dos -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Sac_a_dos_bleu.jfif" alt="Sac à dos Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Sac à dos</h3>
-            <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">45 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sac%20%C3%A0%20dos&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Sac%20%C3%A0%20dos%20Lotus%20d%27Enfance%20(45%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Mini Sac à main -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Mini_Sac_a_main.jfif" alt="Mini Sac à main Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Mini Sac à main</h3>
-            <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">30 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Mini%20Sac%20%C3%A0%20main&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Mini%20Sac%20%C3%A0%20main%20Lotus%20d%27Enfance%20(30%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tote Bag -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Tote_Bag1.jfif" alt="Tote Bag Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Tote Bag</h3>
-            <p class="text-gray-400 text-xs mb-auto">Coton · Logo imprimé</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">15 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Tote%20Bag&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Tote%20Bag%20Lotus%20d%27Enfance%20(15%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Porte-cartes -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Porte_carte1.png" alt="Porte-cartes Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Porte-cartes</h3>
-            <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Porte-cartes&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Porte-cartes%20Lotus%20d%27Enfance%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Mini Porte-Clé -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Photo_Porte_Cle.jfif" alt="Mini Porte-Clé Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Mini Porte-Clé</h3>
-            <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">5 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Mini%20Porte-Cl%C3%A9&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Mini%20Porte-Cl%C3%A9%20Lotus%20d%27Enfance%20(5%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Lampe Torche -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Lampe_Torche.png" alt="Lampe Torche Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Lampe Torche</h3>
-            <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">10 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Lampe%20Torche&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Lampe%20Torche%20Lotus%20d%27Enfance%20(10%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Thermos -->
-        <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Thermos.png" alt="Thermos Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Thermos</h3>
-            <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#2D6A4F] text-xl font-bold mb-2">Prix à venir</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Thermos&body=Bonjour%2C%0A%0AJe%20suis%20int%C3%A9ress%C3%A9(e)%20par%20le%20Thermos%20Lotus%20d%27Enfance.%0A%0AMerci%20de%20me%20communiquer%20le%20prix%20et%20les%20modalit%C3%A9s%20de%20commande.%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20souhait%C3%A9e%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#2D6A4F] hover:bg-[#1B4332]
-                        text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">
-                📧 Me prévenir
-              </a>
-            </div>
-          </div>
-        </article>
-
-      </div><!-- /grille permanente -->
-    </div>
-  </section>
+    </div><!-- /grille limitée -->
+  </div>
+</section>
 
 
-  <!-- ════════════════════════ COLLECTION LIMITÉE ════════════════════════ -->
-  <section id="limitee" class="viet-bg py-16 md:py-20 relative overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none"
-         style="background:radial-gradient(ellipse at 80% 50%,rgba(200,91,138,.12) 0%,transparent 60%)"></div>
-
-    <div class="max-w-6xl mx-auto px-5 relative z-10">
-
-      <div class="text-center mb-12 reveal">
-        <span class="badge-lim mb-4 inline-block">🌟 Loto Vietnam 2026</span>
-        <h2 class="font-serif font-bold text-3xl md:text-4xl text-white mt-2">Collection limitée</h2>
-        <p class="text-white/70 mt-3 max-w-lg mx-auto">
-          <strong class="text-white">Édition spéciale — Mission Vietnam 2026.</strong><br />
-          Vendue lors de notre loto caritatif Vietnam. Chaque article finance directement un repas pour un enfant.
-          Portez la collection, changez une vie.
-        </p>
-      </div>
-
-      <!-- Visuels collection -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto mb-12 reveal">
-        <img src="Photo_Lotus/Merch/56e2f697-c6d8-4ab5-8917-0b63f6a880f5.jfif"
-             alt="Lookbook Collection limitée Vietnam 2026"
-             class="w-full rounded-2xl object-cover aspect-[4/3] border border-white/10 shadow-lg" loading="lazy" />
-        <img src="Photo_Lotus/Merch/photo_ty_ed_limite.jfif"
-             alt="T-shirt édition limitée Vietnam 2026"
-             class="w-full rounded-2xl object-contain aspect-[4/3] border border-white/10 shadow-lg bg-white/5" loading="lazy" />
-      </div>
-
-      <!-- Grille produits collection limitée -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-
-        <!-- T-shirt limitée -->
-        <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Photo_Tee_Shirt2.jfif" alt="T-shirt Collection limitée Vietnam 2026" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
-            <h3 class="font-semibold text-white text-sm leading-snug mb-1">T-shirt manches courtes</h3>
-            <div class="flex gap-1 flex-wrap mb-1">
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">S</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">M</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">L</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">XL</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">2XL</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs text-white/60 mb-auto">
-              <span class="color-dot bg-white"></span> Blanc
-              <span class="color-dot bg-gray-900 ml-1 border-white/30"></span> Noir
-            </div>
-            <div class="mt-3">
-              <div class="font-serif text-[#F4B8D1] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20Collection%20limit%C3%A9e%20Vietnam%202026&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20de%20la%20Collection%20limit%C3%A9e%20Vietnam%202026%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%20%2F%20M%20%2F%20L%20%2F%20XL%20%2F%202XL)%20%3A%20%0AColoris%20(Blanc%20%2F%20Noir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Parka limitée (Noir) -->
-        <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Parka_noir_recto.jfif" alt="Parka noire Collection limitée Vietnam 2026" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
-            <h3 class="font-semibold text-white text-sm leading-snug mb-1">Parka</h3>
-            <div class="flex gap-1 flex-wrap mb-1">
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">S</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">M</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">L</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">XL</span>
-              <span class="text-[.6rem] border border-white/30 px-1.5 py-0.5 rounded text-white/70">2XL</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs text-white/60 mb-auto">
-              <span class="color-dot bg-gray-900 border-white/30"></span> Noir
-            </div>
-            <div class="mt-3">
-              <div class="font-serif text-[#F4B8D1] text-xl font-bold mb-2">75 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Parka%20Collection%20limit%C3%A9e%20Vietnam%202026&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Parka%20de%20la%20Collection%20limit%C3%A9e%20Vietnam%202026%20(75%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%20%2F%20M%20%2F%20L%20%2F%20XL%20%2F%202XL)%20%3A%20%0AColoris%20%3A%20Noir%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Casquette limitée -->
-        <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Casquette1.jfif" alt="Casquette Collection limitée Vietnam 2026" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
-            <h3 class="font-semibold text-white text-sm leading-snug mb-1">Casquette</h3>
-            <p class="text-white/50 text-xs mb-auto">Taille unique</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#F4B8D1] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Casquette%20Collection%20limit%C3%A9e%20Vietnam%202026&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Casquette%20de%20la%20Collection%20limit%C3%A9e%20Vietnam%202026%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Sac à dos limitée -->
-        <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Sac_a_dos_noir.jfif" alt="Sac à dos Collection limitée Vietnam 2026" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
-            <h3 class="font-semibold text-white text-sm leading-snug mb-1">Sac à dos</h3>
-            <p class="text-white/50 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#F4B8D1] text-xl font-bold mb-2">45 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sac%20%C3%A0%20dos%20Collection%20limit%C3%A9e%20Vietnam%202026&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Sac%20%C3%A0%20dos%20de%20la%20Collection%20limit%C3%A9e%20Vietnam%202026%20(45%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Sacoche limitée -->
-        <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Sacoche_Noir.jfif" alt="Sacoche Collection limitée Vietnam 2026" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
-            <h3 class="font-semibold text-white text-sm leading-snug mb-1">Sacoche</h3>
-            <p class="text-white/50 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#F4B8D1] text-xl font-bold mb-2">30 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sacoche%20Collection%20limit%C3%A9e%20Vietnam%202026&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Sacoche%20de%20la%20Collection%20limit%C3%A9e%20Vietnam%202026%20(30%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Porte-cartes limitée -->
-        <article class="card-lift reveal bg-white/10 backdrop-blur border border-[#F4B8D1]/25 rounded-2xl overflow-hidden flex flex-col">
-          <img src="Photo_Lotus/Merch/Porte_Carte2.png" alt="Porte-cartes Collection limitée Vietnam 2026" class="w-full object-cover aspect-square" loading="lazy" />
-          <div class="p-3 flex flex-col flex-1">
-            <span class="badge-lim text-[.6rem] mb-2 self-start">Vietnam 2026</span>
-            <h3 class="font-semibold text-white text-sm leading-snug mb-1">Porte-cartes</h3>
-            <p class="text-white/50 text-xs mb-auto">Logo Lotus d'Enfance</p>
-            <div class="mt-3">
-              <div class="font-serif text-[#F4B8D1] text-xl font-bold mb-2">25 €</div>
-              <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Porte-cartes%20Collection%20limit%C3%A9e%20Vietnam%202026&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Porte-cartes%20de%20la%20Collection%20limit%C3%A9e%20Vietnam%202026%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!"
-                 class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a]
-                        text-white text-xs font-semibold py-2 rounded-xl transition">
-                📧 Commander
-              </a>
-            </div>
-          </div>
-        </article>
-
-      </div><!-- /grille limitée -->
-    </div>
-  </section>
-
-
-  <!-- ════════════════════════ FOOTER ════════════════════════ -->
-  <footer class="bg-[#1B4332] text-white/70 py-14">
-    <div class="max-w-5xl mx-auto px-5 text-center">
-      <img src="Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance"
-           class="h-14 mx-auto mb-5 object-contain opacity-90" />
-      <p class="font-serif text-white text-xl font-semibold mb-1">Lotus d'Enfance</p>
-      <p class="text-sm mb-7 max-w-sm mx-auto leading-relaxed">
-        Association loi 1901 · Tous les bénéfices de la boutique<br />
-        sont reversés aux enfants défavorisés du Vietnam.
-      </p>
-      <div class="flex flex-wrap justify-center gap-5 text-sm mb-8">
-        <a href="mailto:lotusdenfance@gmail.com"
-           class="flex items-center gap-1.5 hover:text-white transition">
-          📧 lotusdenfance@gmail.com
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61584126986437"
-           target="_blank" rel="noopener"
-           class="flex items-center gap-1.5 hover:text-white transition">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
-          </svg>
-          Page Facebook
-        </a>
-        <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2"
-           target="_blank" rel="noopener"
-           class="flex items-center gap-1.5 hover:text-[#F4B8D1] text-[#F4B8D1] font-semibold transition">
-          ❤ Faire un don
-        </a>
-      </div>
-      <a href="index.html"
-         class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/18
-                text-white text-sm font-medium px-6 py-2.5 rounded-full transition">
-        ← Retour au site principal
+<!-- ════ FOOTER ════ -->
+<footer class="bg-[#1B4332] text-white/70 py-14">
+  <div class="max-w-5xl mx-auto px-5 text-center">
+    <img src="Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance" class="h-14 mx-auto mb-5 object-contain opacity-90" />
+    <p class="font-serif text-white text-xl font-semibold mb-1">Lotus d'Enfance</p>
+    <p class="text-sm mb-7 max-w-sm mx-auto leading-relaxed">
+      Association loi 1901 · Tous les bénéfices de la boutique<br />sont reversés aux enfants défavorisés du Vietnam.
+    </p>
+    <div class="flex flex-wrap justify-center gap-5 text-sm mb-8">
+      <a href="mailto:lotusdenfance@gmail.com" class="flex items-center gap-1.5 hover:text-white transition">📧 lotusdenfance@gmail.com</a>
+      <a href="https://www.facebook.com/profile.php?id=61584126986437" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-white transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        Page Facebook
       </a>
-      <p class="text-xs text-white/25 mt-8">© 2026 Lotus d'Enfance · Boutique solidaire</p>
+      <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-[#F4B8D1] text-[#F4B8D1] font-semibold transition">❤ Faire un don</a>
     </div>
-  </footer>
+    <a href="index.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/18 text-white text-sm font-medium px-6 py-2.5 rounded-full transition">← Retour au site principal</a>
+    <p class="text-xs text-white/25 mt-8">© 2026 Lotus d'Enfance · Boutique solidaire</p>
+  </div>
+</footer>
 
 
-  <!-- ════════════════════════ JS ════════════════════════ -->
-  <script>
-    // ── Switcher casquette collection permanente ──
-    function switchCasq(filename, coloris, btn) {
-      // Changer l'image
-      document.getElementById('casq-perm-img').src = 'Photo_Lotus/Merch/' + filename;
-      // Mettre à jour le lien email avec le bon coloris
-      var colorisEnc = encodeURIComponent(coloris);
-      document.getElementById('casq-perm-link').href =
-        'mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Casquette%20(' + colorisEnc + ')' +
-        '&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Casquette%20Lotus%20d%27Enfance%20(25%20%E2%82%AC).%0A%0AMes%20coordonn%C3%A9es%20%3A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AColoris%20%3A%20' + colorisEnc + '%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20beaucoup%20!';
-      // Mettre en surbrillance le bouton actif
-      document.querySelectorAll('#casq-perm-dots .casq-btn').forEach(function(b) {
-        b.style.outline = 'none';
-      });
-      btn.style.outline = '2px solid ' + (coloris === 'Bleu' ? '#3b82f6' : '#C85B8A');
-      btn.style.outlineOffset = '2px';
+<!-- ════ OVERLAY PANIER ════ -->
+<div id="cart-overlay" onclick="closeCart()" class="hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"></div>
+
+<!-- ════ DRAWER PANIER ════ -->
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 flex flex-col translate-x-full">
+  <!-- Header -->
+  <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+    <h2 class="font-serif font-bold text-[#1B4332] text-lg">🛒 Mon panier</h2>
+    <button onclick="closeCart()" class="text-gray-400 hover:text-gray-700 transition text-2xl leading-none">&times;</button>
+  </div>
+
+  <!-- Articles -->
+  <div id="cart-items" class="flex-1 overflow-y-auto px-5 py-3">
+    <p class="text-gray-400 text-sm text-center py-10">Votre panier est vide</p>
+  </div>
+
+  <!-- Total + Infos + Bouton -->
+  <div class="border-t border-gray-100 px-5 py-4 bg-gray-50 space-y-3">
+    <div class="flex justify-between items-center font-semibold text-[#1B4332]">
+      <span>Total estimé</span>
+      <span id="cart-total" class="font-serif text-xl">0 €</span>
+    </div>
+    <div id="cart-form" class="space-y-2 hidden">
+      <input id="cart-nom"     type="text" placeholder="Nom *"     class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
+      <input id="cart-prenom"  type="text" placeholder="Prénom *"  class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
+      <input id="cart-adresse" type="text" placeholder="Adresse"   class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
+      <input id="cart-tel"     type="tel"  placeholder="Téléphone" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
+    </div>
+    <button id="cart-prepare-btn" onclick="showCartForm()" style="display:none"
+            class="btn-pulse w-full bg-[#2D6A4F] hover:bg-[#1B4332] text-white font-semibold py-3 rounded-xl transition shadow-md">
+      Finaliser la commande →
+    </button>
+    <button id="cart-order-btn" onclick="sendCartEmail()" style="display:none"
+            class="btn-pulse w-full bg-[#C85B8A] hover:bg-[#b04d7a] text-white font-semibold py-3 rounded-xl transition shadow-md">
+      📧 Envoyer la commande par email
+    </button>
+    <button onclick="clearCart()" id="cart-clear-btn" style="display:none"
+            class="w-full text-gray-400 hover:text-red-400 text-xs text-center transition py-1">
+      Vider le panier
+    </button>
+  </div>
+</div>
+
+
+<!-- ════ MODAL SÉLECTION TAILLE / COLORIS ════ -->
+<div id="options-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center px-4">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeOptionsModal()"></div>
+  <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-xs p-6">
+    <button onclick="closeOptionsModal()" class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl leading-none">&times;</button>
+    <h3 id="modal-product-name" class="font-serif font-bold text-[#1B4332] text-lg mb-4"></h3>
+
+    <div id="modal-sizes" class="mb-4 hidden">
+      <p class="text-sm font-semibold text-gray-600 mb-2">Taille</p>
+      <div id="modal-sizes-btns" class="flex gap-2 flex-wrap"></div>
+    </div>
+
+    <div id="modal-colors" class="mb-5 hidden">
+      <p class="text-sm font-semibold text-gray-600 mb-2">Coloris</p>
+      <div id="modal-colors-btns" class="flex gap-2 flex-wrap"></div>
+    </div>
+
+    <div class="flex gap-2">
+      <button onclick="closeOptionsModal()" class="flex-1 border border-gray-200 text-gray-500 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-50 transition">Annuler</button>
+      <button onclick="confirmAddToCart()" class="flex-1 bg-[#2D6A4F] hover:bg-[#1B4332] text-white py-2.5 rounded-xl text-sm font-semibold transition">🛒 Ajouter</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════ TOAST CONFIRMATION ════ -->
+<div id="cart-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 translate-y-20 opacity-0 pointer-events-none">
+  <div class="bg-[#1B4332] text-white text-sm font-medium px-5 py-3 rounded-full shadow-xl flex items-center gap-2">
+    ✅ <span id="cart-toast-name"></span> ajouté au panier
+  </div>
+</div>
+
+
+<!-- ════ JS ════ -->
+<script>
+  // ── Casquette interactive ──
+  function switchCasq(filename, coloris, btn) {
+    document.getElementById('casq-perm-img').src = 'Photo_Lotus/Merch/' + filename;
+    var enc = encodeURIComponent(coloris);
+    document.getElementById('casq-perm-link').href =
+      'mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Casquette%20(' + enc + ')' +
+      '&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20une%20Casquette%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AColoris%20%3A%20' + enc + '%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!';
+    document.querySelectorAll('#casq-perm-dots .casq-btn').forEach(function(b){ b.style.outline='none'; });
+    btn.style.outline = '2px solid ' + (coloris==='Bleu' ? '#3b82f6' : '#C85B8A');
+    btn.style.outlineOffset = '2px';
+    window._casqColor = coloris;
+  }
+  window._casqColor = 'Bleu';
+
+  function addCasqToCart() {
+    addToCart('Casquette', 25, '', window._casqColor);
+  }
+
+  // ── Panier ──
+  var cart = JSON.parse(localStorage.getItem('lotus-cart') || '[]');
+
+  function saveCart() { localStorage.setItem('lotus-cart', JSON.stringify(cart)); }
+
+  function addToCart(name, price, taille, coloris) {
+    var key = name + '|' + (taille||'') + '|' + (coloris||'');
+    var found = false;
+    for (var i=0; i<cart.length; i++) {
+      if (cart[i]._key === key) { cart[i].qty++; found=true; break; }
+    }
+    if (!found) cart.push({ _key:key, name:name, price:price, qty:1, taille:taille||'', coloris:coloris||'' });
+    saveCart();
+    updateCartUI();
+    showToast(name);
+  }
+
+  function changeQty(idx, delta) {
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    saveCart(); updateCartUI();
+  }
+
+  function removeItem(idx) { cart.splice(idx,1); saveCart(); updateCartUI(); }
+
+  function clearCart() { cart=[]; saveCart(); updateCartUI(); }
+
+  function updateCartUI() {
+    var total = cart.reduce(function(s,i){ return s+i.qty; }, 0);
+    var countEl = document.getElementById('cart-count');
+    if (total > 0) { countEl.textContent=total; countEl.classList.remove('hidden'); countEl.classList.add('flex'); }
+    else           { countEl.classList.add('hidden'); countEl.classList.remove('flex'); }
+    renderCartItems();
+  }
+
+  function renderCartItems() {
+    var container = document.getElementById('cart-items');
+    var prepBtn   = document.getElementById('cart-prepare-btn');
+    var orderBtn  = document.getElementById('cart-order-btn');
+    var clearBtn  = document.getElementById('cart-clear-btn');
+    var totalEl   = document.getElementById('cart-total');
+
+    if (cart.length === 0) {
+      container.innerHTML = '<p class="text-gray-400 text-sm text-center py-10">Votre panier est vide</p>';
+      totalEl.textContent = '0 €';
+      prepBtn.style.display = 'none'; orderBtn.style.display = 'none'; clearBtn.style.display = 'none';
+      document.getElementById('cart-form').classList.add('hidden');
+      return;
     }
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('on'), i * 70);
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+    var html = ''; var total = 0;
+    cart.forEach(function(item, idx) {
+      total += item.price * item.qty;
+      html += '<div class="flex items-start gap-3 py-3 border-b border-gray-100 last:border-0">' +
+        '<div class="flex-1 min-w-0">' +
+          '<p class="text-sm font-semibold text-gray-800 truncate">' + item.name + '</p>' +
+          (item.taille  ? '<p class="text-xs text-gray-400">Taille : '  + item.taille  + '</p>' : '') +
+          (item.coloris ? '<p class="text-xs text-gray-400">Coloris : ' + item.coloris + '</p>' : '') +
+          '<p class="text-sm font-bold text-[#2D6A4F] mt-0.5">' + (item.price * item.qty) + ' €</p>' +
+        '</div>' +
+        '<div class="flex items-center gap-1 flex-shrink-0">' +
+          '<button onclick="changeQty(' + idx + ',-1)" class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center text-base transition">−</button>' +
+          '<span class="w-6 text-center text-sm font-semibold">' + item.qty + '</span>' +
+          '<button onclick="changeQty(' + idx + ',1)"  class="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center text-base transition">+</button>' +
+        '</div>' +
+        '<button onclick="removeItem(' + idx + ')" class="text-gray-300 hover:text-red-400 transition text-xl leading-none flex-shrink-0 mt-0.5">&times;</button>' +
+      '</div>';
+    });
+
+    container.innerHTML = html;
+    totalEl.textContent = total + ' €';
+    prepBtn.style.display = 'block'; clearBtn.style.display = 'block';
+    orderBtn.style.display = 'none';
+  }
+
+  function showCartForm() {
+    document.getElementById('cart-form').classList.remove('hidden');
+    document.getElementById('cart-prepare-btn').style.display = 'none';
+    document.getElementById('cart-order-btn').style.display = 'block';
+  }
+
+  function sendCartEmail() {
+    if (cart.length === 0) return;
+    var nom     = document.getElementById('cart-nom').value.trim();
+    var prenom  = document.getElementById('cart-prenom').value.trim();
+    var adresse = document.getElementById('cart-adresse').value.trim();
+    var tel     = document.getElementById('cart-tel').value.trim();
+    if (!nom || !prenom) { alert('Veuillez renseigner votre nom et prénom.'); return; }
+
+    var body = 'Bonjour,\n\nJe souhaite passer la commande suivante :\n\n';
+    var total = 0;
+    cart.forEach(function(item) {
+      body += '• ' + item.name + ' × ' + item.qty;
+      var opts = [];
+      if (item.taille)  opts.push('Taille : '  + item.taille);
+      if (item.coloris) opts.push('Coloris : ' + item.coloris);
+      if (opts.length)  body += ' (' + opts.join(', ') + ')';
+      body += ' — ' + (item.price * item.qty) + ' €\n';
+      total += item.price * item.qty;
+    });
+    body += '\nTotal estimé : ' + total + ' €\n\n';
+    body += 'Mes coordonnées :\nNom : ' + nom + '\nPrénom : ' + prenom;
+    if (adresse) body += '\nAdresse : ' + adresse;
+    if (tel)     body += '\nTéléphone : ' + tel;
+    body += '\n\nMerci beaucoup !';
+
+    var subject = encodeURIComponent('Commande Lotus d\'Enfance — ' + cart.length + ' article(s)');
+    window.location.href = 'mailto:lotusdenfance@gmail.com?subject=' + subject + '&body=' + encodeURIComponent(body);
+  }
+
+  function openCart() {
+    document.getElementById('cart-drawer').classList.remove('translate-x-full');
+    document.getElementById('cart-overlay').classList.remove('hidden');
+    renderCartItems();
+  }
+  function closeCart() {
+    document.getElementById('cart-drawer').classList.add('translate-x-full');
+    document.getElementById('cart-overlay').classList.add('hidden');
+  }
+
+  // ── Modal options taille/coloris ──
+  var _pending = null;
+
+  function openOptionsModal(name, price, sizes, colors) {
+    _pending = { name:name, price:price, taille:'', coloris:'' };
+
+    document.getElementById('modal-product-name').textContent = name;
+
+    var sizesDiv = document.getElementById('modal-sizes');
+    var sizesBtns = document.getElementById('modal-sizes-btns');
+    if (sizes && sizes.length) {
+      sizesBtns.innerHTML = sizes.map(function(s){
+        return '<button onclick="selectOpt(this,\'taille\')" class="size-opt px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:border-[#2D6A4F] transition">' + s + '</button>';
+      }).join('');
+      sizesDiv.classList.remove('hidden');
+    } else { sizesDiv.classList.add('hidden'); }
+
+    var colorsDiv = document.getElementById('modal-colors');
+    var colorsBtns = document.getElementById('modal-colors-btns');
+    if (colors && colors.length) {
+      colorsBtns.innerHTML = colors.map(function(c){
+        return '<button onclick="selectOpt(this,\'coloris\')" class="color-opt px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:border-[#2D6A4F] transition">' + c + '</button>';
+      }).join('');
+      colorsDiv.classList.remove('hidden');
+      // Auto-sélectionner si un seul choix
+      if (colors.length === 1) {
+        _pending.coloris = colors[0];
+        colorsBtns.querySelector('button').classList.add('selected');
+      }
+    } else { colorsDiv.classList.add('hidden'); }
+
+    document.getElementById('options-modal').classList.remove('hidden');
+  }
+
+  function selectOpt(btn, type) {
+    var cls = type === 'taille' ? '.size-opt' : '.color-opt';
+    document.querySelectorAll('#options-modal ' + cls).forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    _pending[type] = btn.textContent;
+  }
+
+  function confirmAddToCart() {
+    if (!_pending) return;
+    var needSize  = !document.getElementById('modal-sizes').classList.contains('hidden');
+    var needColor = !document.getElementById('modal-colors').classList.contains('hidden');
+    if (needSize  && !_pending.taille)  { alert('Veuillez choisir une taille.');   return; }
+    if (needColor && !_pending.coloris) { alert('Veuillez choisir un coloris.'); return; }
+    addToCart(_pending.name, _pending.price, _pending.taille, _pending.coloris);
+    closeOptionsModal();
+  }
+
+  function closeOptionsModal() {
+    document.getElementById('options-modal').classList.add('hidden');
+    _pending = null;
+  }
+
+  // ── Toast ──
+  function showToast(name) {
+    var t = document.getElementById('cart-toast');
+    document.getElementById('cart-toast-name').textContent = name;
+    t.classList.remove('translate-y-20','opacity-0');
+    setTimeout(function(){ t.classList.add('translate-y-20','opacity-0'); }, 2500);
+  }
+
+  // ── Scroll reveal ──
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e, i) {
+      if (e.isIntersecting) {
+        setTimeout(function(){ e.target.classList.add('on'); }, i * 70);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+
+  // ── Init ──
+  updateCartUI();
+</script>
 
 </body>
 </html>
