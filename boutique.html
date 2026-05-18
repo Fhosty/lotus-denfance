@@ -228,23 +228,27 @@
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
 
-      <!-- T-shirt manches courtes -->
+      <!-- T-shirt manches courtes (switcher coloris) -->
       <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-        <img src="Photo_Lotus/Merch/Tee_shirt_recto.jfif" alt="T-shirt manches courtes" class="w-full object-cover aspect-square" loading="lazy" />
+        <img id="tshirt-img" src="Photo_Lotus/Merch/Tee_shirt_recto.jfif" alt="T-shirt manches courtes" class="w-full object-cover aspect-square transition-opacity duration-200" loading="lazy" />
         <div class="p-3 flex flex-col flex-1">
           <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">T-shirt manches courtes</h3>
           <p class="text-gray-400 text-xs mb-1">Unisexe · Logo Lotus</p>
           <div class="flex gap-1 flex-wrap mb-1">
             <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
           </div>
-          <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
-            <span class="color-dot bg-white"></span> Blanc <span class="color-dot bg-gray-900 ml-1"></span> Noir
+          <div class="flex items-center gap-2 mb-auto" id="tshirt-dots">
+            <button onclick="switchTshirt('Tee_shirt_blanc.jfif','Blanc',this)" title="Blanc"
+                    class="tshirt-btn w-5 h-5 rounded-full bg-white border-2 border-gray-300 cursor-pointer hover:scale-110 transition"></button>
+            <button onclick="switchTshirt('Tee_shirt_recto.jfif','Noir',this)" title="Noir"
+                    class="tshirt-btn w-5 h-5 rounded-full bg-gray-900 border-2 border-gray-600 cursor-pointer hover:scale-110 transition"
+                    style="outline:2px solid #111827;outline-offset:2px;"></button>
           </div>
           <div class="mt-3 flex flex-col gap-1.5">
             <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
-            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20manches%20courtes&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20manches%20courtes%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20(Blanc%2FNoir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+            <a id="tshirt-link" href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20manches%20courtes%20(Noir)&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20manches%20courtes%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20%3A%20Noir%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
                class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
-            <button onclick="openOptionsModal('T-shirt manches courtes',25,['S','M','L','XL','2XL'],['Blanc','Noir'])"
+            <button onclick="addTshirtToCart()"
                     class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
@@ -260,13 +264,13 @@
             <span class="size-pill">S</span><span class="size-pill">M</span><span class="size-pill">L</span><span class="size-pill">XL</span><span class="size-pill">2XL</span>
           </div>
           <div class="flex items-center gap-2 text-xs text-gray-500 mb-auto">
-            <span class="color-dot bg-white"></span> Blanc <span class="color-dot bg-gray-900 ml-1"></span> Noir
+            <span class="color-dot bg-gray-900"></span> Noir uniquement
           </div>
           <div class="mt-3 flex flex-col gap-1.5">
             <div class="font-serif text-[#2D6A4F] text-xl font-bold">25 €</div>
-            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20gros%20logo&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20gros%20logo%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20(Blanc%2FNoir)%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20gros%20logo&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20gros%20logo%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20%3A%20Noir%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
                class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
-            <button onclick="openOptionsModal('T-shirt gros logo',25,['S','M','L','XL','2XL'],['Blanc','Noir'])"
+            <button onclick="openOptionsModal('T-shirt gros logo',25,['S','M','L','XL','2XL'],['Noir'])"
                     class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
@@ -345,6 +349,22 @@
             <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sac%20%C3%A0%20dos&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Sac%20%C3%A0%20dos%20(45%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
                class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
             <button onclick="addToCart('Sac à dos',45,'','')"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sac à dos léger -->
+      <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <img src="Photo_Lotus/Merch/Sac_a_dos_léger.jfif" alt="Sac à dos léger Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <div class="p-3 flex flex-col flex-1">
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Sac à dos léger</h3>
+          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <div class="mt-3 flex flex-col gap-1.5">
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">15 €</div>
+            <a href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Sac%20%C3%A0%20dos%20l%C3%A9ger&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Sac%20%C3%A0%20dos%20l%C3%A9ger%20(15%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addToCart('Sac à dos léger',15,'','')"
                     class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
@@ -430,16 +450,29 @@
         </div>
       </article>
 
-      <!-- Thermos -->
+      <!-- Thermos 500ml (switcher 4 coloris) -->
       <article class="card-lift reveal bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
-        <img src="Photo_Lotus/Merch/Thermos.png" alt="Thermos Lotus d'Enfance" class="w-full object-cover aspect-square" loading="lazy" />
+        <img id="thermos-img" src="Photo_Lotus/Merch/Thermos.png" alt="Thermos 500ml Lotus d'Enfance" class="w-full object-cover aspect-square transition-opacity duration-200" loading="lazy" />
         <div class="p-3 flex flex-col flex-1">
-          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Thermos</h3>
-          <p class="text-gray-400 text-xs mb-auto">Logo Lotus d'Enfance</p>
+          <h3 class="font-semibold text-[#1B4332] text-sm leading-snug mb-1">Thermos 500ml</h3>
+          <p class="text-gray-400 text-xs mb-1">Logo Lotus d'Enfance</p>
+          <div class="flex items-center gap-2 mb-auto" id="thermos-dots">
+            <button onclick="switchThermos('Thermos.png','Rose',this)" title="Rose"
+                    class="thermos-btn w-5 h-5 rounded-full bg-[#F4B8D1] border-2 border-[#C85B8A] cursor-pointer hover:scale-110 transition"
+                    style="outline:2px solid #C85B8A;outline-offset:2px;"></button>
+            <button onclick="switchThermos('Thermos_noir.jfif','Noir',this)" title="Noir"
+                    class="thermos-btn w-5 h-5 rounded-full bg-gray-900 border-2 border-gray-600 cursor-pointer hover:scale-110 transition"></button>
+            <button onclick="switchThermos('Thermos_Bleu.jfif','Bleu',this)" title="Bleu"
+                    class="thermos-btn w-5 h-5 rounded-full bg-blue-500 border-2 border-blue-300 cursor-pointer hover:scale-110 transition"></button>
+            <button onclick="switchThermos('Thermos_Vert.jfif','Vert',this)" title="Vert"
+                    class="thermos-btn w-5 h-5 rounded-full bg-[#2D6A4F] border-2 border-[#52B788] cursor-pointer hover:scale-110 transition"></button>
+          </div>
           <div class="mt-3 flex flex-col gap-1.5">
-            <div class="font-serif text-[#2D6A4F] text-xl font-bold">Prix à venir</div>
-            <a href="mailto:lotusdenfance@gmail.com?subject=Int%C3%A9r%C3%AAt%20%3A%20Thermos&body=Bonjour%2C%0A%0AJe%20suis%20int%C3%A9ress%C3%A9(e)%20par%20le%20Thermos.%0AMerci%20de%20me%20communiquer%20le%20prix.%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0ATél%20%3A%20%0A%0AMerci%20!"
-               class="btn-pulse block w-full text-center bg-[#2D6A4F] hover:bg-[#1B4332] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Me prévenir</a>
+            <div class="font-serif text-[#2D6A4F] text-xl font-bold">35 €</div>
+            <a id="thermos-link" href="mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Thermos%20500ml%20(Rose)&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Thermos%20500ml%20(35%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AColoris%20%3A%20Rose%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!"
+               class="btn-pulse block w-full text-center bg-[#C85B8A] hover:bg-[#b04d7a] text-white text-xs font-semibold py-2 rounded-xl transition shadow-sm">📧 Commander</a>
+            <button onclick="addThermos()"
+                    class="btn-pulse w-full text-center border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white text-xs font-semibold py-2 rounded-xl transition">🛒 Ajouter au panier</button>
           </div>
         </div>
       </article>
@@ -695,6 +728,41 @@
 
 <!-- ════ JS ════ -->
 <script>
+  // ── T-shirt switcher coloris ──
+  window._tshirtColor = 'Noir';
+  function switchTshirt(filename, coloris, btn) {
+    document.getElementById('tshirt-img').src = 'Photo_Lotus/Merch/' + filename;
+    var enc = encodeURIComponent(coloris);
+    document.getElementById('tshirt-link').href =
+      'mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20T-shirt%20manches%20courtes%20(' + enc + ')' +
+      '&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20T-shirt%20manches%20courtes%20(25%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0ATaille%20(S%2FM%2FL%2FXL%2F2XL)%20%3A%20%0AColoris%20%3A%20' + enc + '%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!';
+    document.querySelectorAll('#tshirt-dots .tshirt-btn').forEach(function(b){ b.style.outline='none'; });
+    btn.style.outline = '2px solid ' + (coloris==='Noir' ? '#111827' : '#9ca3af');
+    btn.style.outlineOffset = '2px';
+    window._tshirtColor = coloris;
+  }
+  function addTshirtToCart() {
+    openOptionsModal('T-shirt manches courtes', 25, ['S','M','L','XL','2XL'], ['Blanc','Noir'], window._tshirtColor);
+  }
+
+  // ── Thermos switcher coloris ──
+  window._thermosColor = 'Rose';
+  function switchThermos(filename, coloris, btn) {
+    document.getElementById('thermos-img').src = 'Photo_Lotus/Merch/' + filename;
+    var enc = encodeURIComponent(coloris);
+    document.getElementById('thermos-link').href =
+      'mailto:lotusdenfance@gmail.com?subject=Commande%20%3A%20Thermos%20500ml%20(' + enc + ')' +
+      '&body=Bonjour%2C%0A%0AJe%20souhaite%20commander%20un%20Thermos%20500ml%20(35%20%E2%82%AC).%0A%0ANom%20%3A%20%0APr%C3%A9nom%20%3A%20%0AAdresse%20%3A%20%0AColoris%20%3A%20' + enc + '%0AQuantit%C3%A9%20%3A%201%0A%0AMerci%20!';
+    document.querySelectorAll('#thermos-dots .thermos-btn').forEach(function(b){ b.style.outline='none'; });
+    var outlineColors = { Rose:'#C85B8A', Noir:'#111827', Bleu:'#3b82f6', Vert:'#2D6A4F' };
+    btn.style.outline = '2px solid ' + (outlineColors[coloris] || '#888');
+    btn.style.outlineOffset = '2px';
+    window._thermosColor = coloris;
+  }
+  function addThermos() {
+    addToCart('Thermos 500ml', 35, '', window._thermosColor);
+  }
+
   // ── Casquette interactive ──
   function switchCasq(filename, coloris, btn) {
     document.getElementById('casq-perm-img').src = 'Photo_Lotus/Merch/' + filename;
@@ -836,8 +904,8 @@
   // ── Modal options taille/coloris ──
   var _pending = null;
 
-  function openOptionsModal(name, price, sizes, colors) {
-    _pending = { name:name, price:price, taille:'', coloris:'' };
+  function openOptionsModal(name, price, sizes, colors, preColor) {
+    _pending = { name:name, price:price, taille:'', coloris: preColor||'' };
 
     document.getElementById('modal-product-name').textContent = name;
 
@@ -857,7 +925,10 @@
         return '<button onclick="selectOpt(this,\'coloris\')" class="color-opt px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:border-[#2D6A4F] transition">' + c + '</button>';
       }).join('');
       colorsDiv.classList.remove('hidden');
-      // Auto-sélectionner si un seul choix
+      // Auto-sélectionner si un seul choix ou pré-sélection
+      colorsBtns.querySelectorAll('button').forEach(function(b){
+        if (b.textContent === _pending.coloris) b.classList.add('selected');
+      });
       if (colors.length === 1) {
         _pending.coloris = colors[0];
         colorsBtns.querySelector('button').classList.add('selected');
