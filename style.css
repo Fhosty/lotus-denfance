@@ -939,6 +939,14 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
 .product-card.viet { border-color: rgba(244,184,209,.3); background: rgba(200,91,138,.12); }
 .product-card.viet:hover { background: rgba(200,91,138,.22); }
 .product-emoji { font-size: 1.8rem; }
+.product-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 4px);
+  margin-bottom: 2px;
+}
+.product-img--contain { object-fit: contain; background: rgba(255,255,255,.06); }
 .product-name { color: rgba(255,255,255,.85); font-size: .85rem; font-weight: 500; }
 .product-price { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
 .vietnam-collection { border-color: rgba(244,184,209,.3) !important; }
