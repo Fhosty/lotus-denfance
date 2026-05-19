@@ -949,6 +949,37 @@ input:focus, select:focus, textarea:focus { border-color: var(--green-light); bo
 .product-img--contain { object-fit: contain; background: rgba(255,255,255,.06); }
 .product-name { color: rgba(255,255,255,.85); font-size: .85rem; font-weight: 500; }
 .product-price { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+.product-impact { color: rgba(255,255,255,.5); font-size: .72rem; font-style: italic; line-height: 1.4; margin-top: -4px; }
+
+/* ── Bannière catalogue complet ── */
+.catalogue-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: linear-gradient(135deg, rgba(212,175,55,.15) 0%, rgba(212,175,55,.06) 100%);
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: var(--radius-lg);
+  padding: 28px 36px;
+  margin: 8px 0 32px;
+}
+.catalogue-banner-text { flex: 1; }
+.catalogue-banner-text strong { display: block; color: var(--white); font-size: 1.1rem; margin-bottom: 6px; }
+.catalogue-banner-text p { color: rgba(255,255,255,.7); font-size: .9rem; margin: 0; }
+.catalogue-banner-count {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  flex-shrink: 0;
+  text-align: center;
+}
+.catalogue-banner-count span { display: block; font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 500; color: rgba(255,255,255,.55); letter-spacing: .06em; text-transform: uppercase; margin-top: 2px; }
+@media (max-width: 600px) {
+  .catalogue-banner { flex-direction: column; padding: 22px 20px; text-align: center; }
+  .catalogue-banner-count { font-size: 2.2rem; }
+}
 .vietnam-collection { border-color: rgba(244,184,209,.3) !important; }
 .vietnam-header { margin-bottom: 28px; }
 .vietnam-badge {
