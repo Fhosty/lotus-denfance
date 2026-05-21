@@ -222,7 +222,7 @@
     <div class="text-center mb-12 reveal">
       <span class="badge-perm mb-4 inline-block">🛍️ Loto association</span>
       <h2 class="font-serif font-bold text-3xl md:text-4xl text-[#1B4332] mt-2">Collection permanente</h2>
-      <p class="text-gray-500 mt-3">Articles disponibles toute l'année — vendus lors de notre loto association</p>
+      <p class="text-gray-500 mt-3">Articles disponibles toute l'année — vendus lors de nos événements caritatifs</p>
     </div>
     <div class="mb-10 rounded-3xl overflow-hidden shadow-lg max-w-2xl mx-auto reveal">
       <img src="Photo_Lotus/Merch/3c642bed-13b3-46c5-a784-86e341d2cf44.jfif" alt="Catalogue Lotus d'Enfance" class="w-full object-cover" loading="lazy" />
@@ -509,7 +509,7 @@
       <h2 class="font-serif font-bold text-3xl md:text-4xl text-white mt-2">Collection limitée</h2>
       <p class="text-white/70 mt-3 max-w-lg mx-auto">
         <strong class="text-white">Édition spéciale — Mission Vietnam 2026.</strong><br />
-        Vendue lors de notre loto caritatif Vietnam. Chaque article finance directement un repas pour un enfant.
+        Chaque article finance directement un repas pour un enfant.
       </p>
     </div>
 
@@ -692,8 +692,8 @@
     <div id="cart-form" class="space-y-2 hidden">
       <input id="cart-nom"     type="text" placeholder="Nom *"     class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
       <input id="cart-prenom"  type="text" placeholder="Prénom *"  class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
-      <input id="cart-adresse" type="text" placeholder="Adresse"   class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
-      <input id="cart-tel"     type="tel"  placeholder="Téléphone" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
+      <input id="cart-adresse" type="text" placeholder="Adresse *"   class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
+      <input id="cart-tel"     type="tel"  placeholder="Téléphone *" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#2D6A4F]" />
     </div>
     <button id="cart-prepare-btn" onclick="showCartForm()" style="display:none"
             class="btn-pulse w-full bg-[#2D6A4F] hover:bg-[#1B4332] text-white font-semibold py-3 rounded-xl transition shadow-md">
@@ -886,7 +886,26 @@
     var prenom  = document.getElementById('cart-prenom').value.trim();
     var adresse = document.getElementById('cart-adresse').value.trim();
     var tel     = document.getElementById('cart-tel').value.trim();
-    if (!nom || !prenom) { alert('Veuillez renseigner votre nom et prénom.'); return; }
+    var fields = [
+      { id: 'cart-nom',     val: nom,     label: 'Nom' },
+      { id: 'cart-prenom',  val: prenom,  label: 'Prénom' },
+      { id: 'cart-adresse', val: adresse, label: 'Adresse' },
+      { id: 'cart-tel',     val: tel,     label: 'Téléphone' }
+    ];
+    var missing = [];
+    fields.forEach(function(f) {
+      var el = document.getElementById(f.id);
+      if (!f.val) {
+        missing.push(f.label);
+        el.style.borderColor = '#C85B8A';
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+    if (missing.length) {
+      alert('Veuillez renseigner les champs obligatoires (*) :\n• ' + missing.join('\n• '));
+      return;
+    }
 
     var body = 'Bonjour,\n\nJe souhaite passer la commande suivante :\n\n';
     var total = 0;
@@ -901,8 +920,8 @@
     });
     body += '\nTotal estimé : ' + total + ' €\n\n';
     body += 'Mes coordonnées :\nNom : ' + nom + '\nPrénom : ' + prenom;
-    if (adresse) body += '\nAdresse : ' + adresse;
-    if (tel)     body += '\nTéléphone : ' + tel;
+    body += '\nAdresse : ' + adresse;
+    body += '\nTéléphone : ' + tel;
     body += '\n\nMerci beaucoup !';
 
     var subject = encodeURIComponent('Commande Lotus d\'Enfance — ' + cart.length + ' article(s)');
