@@ -8,3 +8,6 @@ Thumbs.db
 Photo_Lotus/En attente/
 Photo_Lotus/Vidéo Lotus/
 Photo_Lotus/_preview/
+
+# Binaire de build Tailwind (40 Mo — à retélécharger si besoin)
+tailwindcss.exe
