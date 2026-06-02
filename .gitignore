@@ -1,0 +1,10 @@
+# Outils / éditeurs
+.claude/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Médias de travail non publiés
+Photo_Lotus/En attente/
+Photo_Lotus/Vidéo Lotus/
+Photo_Lotus/_preview/

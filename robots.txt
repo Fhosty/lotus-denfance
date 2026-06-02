@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fhosty.github.io/lotus-denfance/sitemap.xml
