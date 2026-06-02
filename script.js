@@ -90,12 +90,6 @@ function animateCounter(el) {
     el.textContent = Math.floor(cur);
   }, 16);
 }
-new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); }
-  });
-}, { threshold: 0.5 }).observe; // réassigné ci-dessous
-
 const counterObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); }
@@ -123,15 +117,33 @@ const formSuccess = document.getElementById('formSuccess');
 if (contactForm) {
   contactForm.addEventListener('submit', e => {
     e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    btn.textContent = 'Envoi en cours…';
-    btn.disabled = true;
-    setTimeout(() => {
-      formSuccess.style.display = 'block';
-      contactForm.reset();
-      btn.textContent = 'Envoyer le message';
-      btn.disabled = false;
-      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 900);
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+
+    const subjectLabels = {
+      don:         'Faire un don',
+      benevole:    'Devenir bénévole',
+      partenariat: 'Partenariat',
+      info:        "Demande d'information",
+      autre:       'Autre'
+    };
+    const subjectText = subjectLabels[subject] || 'Contact site';
+
+    const body =
+      `Bonjour,\n\nNom : ${name}\nEmail : ${email}\n\nMessage :\n${message}\n\n` +
+      `Envoyé depuis le site Lotus d'Enfance.`;
+
+    const mailtoUrl =
+      `mailto:lotusdenfance@gmail.com` +
+      `?subject=${encodeURIComponent('[Site] ' + subjectText + ' — ' + name)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoUrl;
+
+    formSuccess.style.display = 'block';
+    contactForm.reset();
+    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 }
