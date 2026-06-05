@@ -15,3 +15,7 @@ tailwindcss.exe
 # Scripts de migration ponctuels
 convert_webp.py
 apply_webp.py
+build_deploy.py
+
+# Dossier de déploiement OVH généré (artefact local, prêt pour FTP)
+site_ovh/
