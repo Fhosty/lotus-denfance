@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Politique de confidentialité – Lotus d'Enfance</title>
+  <title data-i18n="cf.title">Politique de confidentialité – Lotus d'Enfance</title>
   <meta name="description" content="Politique de confidentialité et protection des données personnelles de l'association Lotus d'Enfance (RGPD)." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://lotus-denfance.fr/confidentialite.html" />
   <link rel="icon" type="image/png" href="Photo_Lotus/Logo_Lotus.png" />
   <link rel="apple-touch-icon" href="Photo_Lotus/Logo_Lotus.png" />
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="lang.js?v=1"></script>
 </head>
 <body>
 
@@ -22,65 +23,71 @@
         <img src="Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance" />
         <span class="legal-logo-text">Lotus d'Enfance</span>
       </a>
-      <a href="index.html" class="legal-back">← Retour au site</a>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="lang-switch on-dark" role="group" aria-label="Langue / Language">
+          <button type="button" data-lang-btn="fr" onclick="setLang('fr')">FR</button>
+          <button type="button" data-lang-btn="en" onclick="setLang('en')">EN</button>
+        </div>
+        <a href="index.html" class="legal-back" data-i18n="legal.back">← Retour au site</a>
+      </div>
     </div>
   </header>
 
   <main class="legal-main">
-    <h1>Politique de confidentialité</h1>
-    <p class="legal-updated">Dernière mise à jour : 2 juin 2026</p>
+    <h1 data-i18n="cf.title">Politique de confidentialité</h1>
+    <p class="legal-updated" data-i18n="cf.updated">Dernière mise à jour : 2 juin 2026</p>
 
-    <p>
+    <p data-i18n-html="cf.intro">
       L'association <strong>Lotus d'Enfance</strong> accorde une grande importance à la protection
       de votre vie privée. Cette politique explique quelles données personnelles nous collectons,
       pourquoi, et quels sont vos droits, conformément au Règlement Général sur la Protection des
       Données (RGPD) et à la loi « Informatique et Libertés ».
     </p>
 
-    <h2>1. Responsable du traitement</h2>
-    <p>
+    <h2 data-i18n="cf.s1">1. Responsable du traitement</h2>
+    <p data-i18n-html="cf.s1.p">
       Le responsable du traitement des données est l'association Lotus d'Enfance,
       dont le siège social est situé 6 place du 11 Novembre, 45630 Beaulieu-sur-Loire,
       représentée par sa présidente Mme KOYUNCU Thi Bich Nhung.<br />
       Contact : <a href="mailto:lotusdenfance@gmail.com">lotusdenfance@gmail.com</a>
     </p>
 
-    <h2>2. Données collectées et finalités</h2>
+    <h2 data-i18n="cf.s2">2. Données collectées et finalités</h2>
 
-    <h3>a) Formulaire de contact</h3>
-    <p>Lorsque vous utilisez notre formulaire de contact, nous traitons :</p>
+    <h3 data-i18n="cf.s2a">a) Formulaire de contact</h3>
+    <p data-i18n="cf.s2a.p">Lorsque vous utilisez notre formulaire de contact, nous traitons :</p>
     <ul>
-      <li><strong>Nom complet</strong> — pour vous identifier et vous répondre ;</li>
-      <li><strong>Adresse e-mail</strong> — pour vous répondre ;</li>
-      <li><strong>Sujet et message</strong> — pour traiter votre demande.</li>
+      <li data-i18n-html="cf.s2a.l1"><strong>Nom complet</strong> — pour vous identifier et vous répondre ;</li>
+      <li data-i18n-html="cf.s2a.l2"><strong>Adresse e-mail</strong> — pour vous répondre ;</li>
+      <li data-i18n-html="cf.s2a.l3"><strong>Sujet et message</strong> — pour traiter votre demande.</li>
     </ul>
-    <p>
+    <p data-i18n-html="cf.s2a.note">
       Ce formulaire ouvre votre logiciel de messagerie : les informations sont transmises par e-mail
       à l'adresse de l'association. <strong>Base légale :</strong> votre consentement (envoi volontaire du message).
     </p>
 
-    <h3>b) Commande de la boutique solidaire</h3>
-    <p>Lorsque vous passez une commande via le panier, nous traitons :</p>
+    <h3 data-i18n="cf.s2b">b) Commande de la boutique solidaire</h3>
+    <p data-i18n="cf.s2b.p">Lorsque vous passez une commande via le panier, nous traitons :</p>
     <ul>
-      <li><strong>Nom et prénom</strong> — pour préparer et identifier votre commande ;</li>
-      <li><strong>Adresse postale</strong> — pour la livraison de vos articles ;</li>
-      <li><strong>Numéro de téléphone</strong> — pour vous contacter au sujet de la commande.</li>
+      <li data-i18n-html="cf.s2b.l1"><strong>Nom et prénom</strong> — pour préparer et identifier votre commande ;</li>
+      <li data-i18n-html="cf.s2b.l2"><strong>Adresse postale</strong> — pour la livraison de vos articles ;</li>
+      <li data-i18n-html="cf.s2b.l3"><strong>Numéro de téléphone</strong> — pour vous contacter au sujet de la commande.</li>
     </ul>
-    <p>
+    <p data-i18n-html="cf.s2b.note">
       Le contenu du panier est enregistré <strong>uniquement dans votre navigateur</strong> (stockage local)
       et n'est transmis à l'association que si vous finalisez la commande par e-mail.
       <strong>Base légale :</strong> exécution des mesures précontractuelles et votre consentement.
     </p>
 
-    <h3>c) Dons</h3>
-    <p>
+    <h3 data-i18n="cf.s2c">c) Dons</h3>
+    <p data-i18n-html="cf.s2c.p">
       Les dons sont traités par la plateforme <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener">HelloAsso</a>.
       L'association ne collecte ni ne conserve aucune donnée bancaire. Nous vous invitons à consulter
       la politique de confidentialité de HelloAsso pour ces traitements.
     </p>
 
-    <h2>3. Cookies et stockage local</h2>
-    <p>
+    <h2 data-i18n="cf.s3">3. Cookies et stockage local</h2>
+    <p data-i18n-html="cf.s3.p">
       Ce site <strong>n'utilise aucun cookie de suivi ni outil de mesure d'audience</strong>.
       Seul un <strong>stockage local</strong> (« localStorage ») est utilisé pour mémoriser le contenu
       de votre panier sur votre appareil. Il est strictement nécessaire au fonctionnement de la boutique
@@ -88,34 +95,34 @@
       de votre navigateur.
     </p>
 
-    <h2>4. Destinataires des données</h2>
-    <p>
+    <h2 data-i18n="cf.s4">4. Destinataires des données</h2>
+    <p data-i18n-html="cf.s4.p">
       Vos données sont destinées exclusivement à l'association Lotus d'Enfance (ses membres habilités).
       Elles ne sont <strong>jamais vendues, louées ni cédées</strong> à des tiers à des fins commerciales.
     </p>
 
-    <h2>5. Durée de conservation</h2>
-    <p>
+    <h2 data-i18n="cf.s5">5. Durée de conservation</h2>
+    <p data-i18n-html="cf.s5.p">
       Vos données ne sont conservées que le temps nécessaire au traitement de votre demande ou de votre
       commande, puis supprimées au plus tard <strong>3 ans après le dernier contact</strong>.
     </p>
 
-    <h2>6. Vos droits</h2>
-    <p>Conformément au RGPD, vous disposez des droits suivants sur vos données :</p>
+    <h2 data-i18n="cf.s6">6. Vos droits</h2>
+    <p data-i18n="cf.s6.p">Conformément au RGPD, vous disposez des droits suivants sur vos données :</p>
     <ul>
-      <li>droit d'<strong>accès</strong> et de <strong>rectification</strong> ;</li>
-      <li>droit à l'<strong>effacement</strong> (« droit à l'oubli ») ;</li>
-      <li>droit à la <strong>limitation</strong> et à l'<strong>opposition</strong> au traitement ;</li>
-      <li>droit à la <strong>portabilité</strong> de vos données.</li>
+      <li data-i18n-html="cf.s6.l1">droit d'<strong>accès</strong> et de <strong>rectification</strong> ;</li>
+      <li data-i18n-html="cf.s6.l2">droit à l'<strong>effacement</strong> (« droit à l'oubli ») ;</li>
+      <li data-i18n-html="cf.s6.l3">droit à la <strong>limitation</strong> et à l'<strong>opposition</strong> au traitement ;</li>
+      <li data-i18n-html="cf.s6.l4">droit à la <strong>portabilité</strong> de vos données.</li>
     </ul>
-    <p>
+    <p data-i18n-html="cf.s6.note">
       Pour exercer ces droits, écrivez-nous à <a href="mailto:lotusdenfance@gmail.com">lotusdenfance@gmail.com</a>.
       Vous disposez également du droit d'introduire une réclamation auprès de la
       <a href="https://www.cnil.fr" target="_blank" rel="noopener">CNIL</a> (www.cnil.fr).
     </p>
 
-    <h2>7. Modifications</h2>
-    <p>
+    <h2 data-i18n="cf.s7">7. Modifications</h2>
+    <p data-i18n="cf.s7.p">
       Cette politique peut être mise à jour à tout moment. La date de dernière mise à jour figure
       en haut de cette page.
     </p>
@@ -124,8 +131,8 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="border-top:none;">
-        <p>© 2026 Lotus d'Enfance · Association loi 1901 · Tous droits réservés</p>
-        <p><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="index.html">Accueil</a></p>
+        <p data-i18n="footer.bottom.rights">© 2026 Lotus d'Enfance · Association loi 1901 · Tous droits réservés</p>
+        <p><a href="mentions-legales.html" data-i18n="footer.bottom.legal">Mentions légales</a> · <a href="confidentialite.html" data-i18n="footer.bottom.privacy">Confidentialité</a> · <a href="index.html" data-i18n="footer.nav.home">Accueil</a></p>
       </div>
     </div>
   </footer>

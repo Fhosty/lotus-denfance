@@ -7,10 +7,11 @@
   <meta name="robots" content="noindex" />
   <link rel="icon" type="image/png" href="/Photo_Lotus/Logo_Lotus.png" />
   <link rel="apple-touch-icon" href="/Photo_Lotus/Logo_Lotus.png" />
-  <link rel="stylesheet" href="/style.css?v=6" />
+  <link rel="stylesheet" href="/style.css?v=7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="/lang.js?v=1"></script>
 </head>
 <body>
 
@@ -20,29 +21,35 @@
         <img src="/Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance" />
         <span class="legal-logo-text">Lotus d'Enfance</span>
       </a>
-      <a href="/index.html" class="legal-back">← Retour au site</a>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="lang-switch on-dark" role="group" aria-label="Langue / Language">
+          <button type="button" data-lang-btn="fr" onclick="setLang('fr')">FR</button>
+          <button type="button" data-lang-btn="en" onclick="setLang('en')">EN</button>
+        </div>
+        <a href="/index.html" class="legal-back" data-i18n="legal.back">← Retour au site</a>
+      </div>
     </div>
   </header>
 
   <main class="error-page">
     <div class="error-code">404</div>
-    <h1>Oups, cette page est introuvable 🌸</h1>
-    <p>
+    <h1 data-i18n="e404.title">Oups, cette page est introuvable 🌸</h1>
+    <p data-i18n="e404.p">
       La page que vous cherchez n'existe pas ou a été déplacée.
       Pas d'inquiétude — vous pouvez revenir à l'accueil pour découvrir nos actions
       en faveur des enfants du Vietnam.
     </p>
     <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
-      <a href="/index.html" class="btn-primary">Retour à l'accueil</a>
-      <a href="/boutique.html" class="btn-outline">Voir la boutique</a>
+      <a href="/index.html" class="btn-primary" data-i18n="e404.home">Retour à l'accueil</a>
+      <a href="/boutique.html" class="btn-outline" data-i18n="e404.shop">Voir la boutique</a>
     </div>
   </main>
 
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="border-top:none;">
-        <p>© 2026 Lotus d'Enfance · Association loi 1901 · Tous droits réservés</p>
-        <p><a href="/mentions-legales.html">Mentions légales</a> · <a href="/confidentialite.html">Confidentialité</a> · <a href="/index.html">Accueil</a></p>
+        <p data-i18n="footer.bottom.rights">© 2026 Lotus d'Enfance · Association loi 1901 · Tous droits réservés</p>
+        <p><a href="/mentions-legales.html" data-i18n="footer.bottom.legal">Mentions légales</a> · <a href="/confidentialite.html" data-i18n="footer.bottom.privacy">Confidentialité</a> · <a href="/index.html" data-i18n="footer.nav.home">Accueil</a></p>
       </div>
     </div>
   </footer>

@@ -122,22 +122,22 @@ if (contactForm) {
     const subject = document.getElementById('subject').value;
     const message = document.getElementById('message').value.trim();
 
-    const subjectLabels = {
-      don:         'Faire un don',
-      benevole:    'Devenir bénévole',
-      partenariat: 'Partenariat',
-      info:        "Demande d'information",
-      autre:       'Autre'
+    // Libellés via le moteur i18n (lang.js) avec repli français
+    const tr = (typeof window.t === 'function') ? window.t : (k => k);
+    const subjectKeys = {
+      don: 'c.subj.don', benevole: 'c.subj.benevole', partenariat: 'c.subj.partenariat',
+      info: 'c.subj.info', autre: 'c.subj.autre'
     };
-    const subjectText = subjectLabels[subject] || 'Contact site';
+    const subjectText = subjectKeys[subject] ? tr(subjectKeys[subject]) : tr('c.subj.default');
 
-    const body =
-      `Bonjour,\n\nNom : ${name}\nEmail : ${email}\n\nMessage :\n${message}\n\n` +
-      `Envoyé depuis le site Lotus d'Enfance.`;
+    const body = tr('c.body')
+      .replace('{name}', name)
+      .replace('{email}', email)
+      .replace('{message}', message);
 
     const mailtoUrl =
       `mailto:lotusdenfance@gmail.com` +
-      `?subject=${encodeURIComponent('[Site] ' + subjectText + ' — ' + name)}` +
+      `?subject=${encodeURIComponent(tr('c.subject.prefix') + subjectText + ' — ' + name)}` +
       `&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoUrl;

@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ══ SEO de base ══ -->
-  <title>Lotus d'Enfance – Association humanitaire pour les enfants du Vietnam</title>
-  <meta name="description" content="Lotus d'Enfance est une association loi 1901 qui aide les enfants défavorisés du Vietnam : accès à l'éducation, repas quotidiens, loto caritatif. Rejoignez notre cause !" />
+  <title data-i18n="meta.title">Lotus d'Enfance – Association humanitaire pour les enfants du Vietnam</title>
+  <meta name="description" data-i18n-content="meta.description" content="Lotus d'Enfance est une association loi 1901 qui aide les enfants défavorisés du Vietnam : accès à l'éducation, repas quotidiens, loto caritatif. Rejoignez notre cause !" />
   <meta name="keywords" content="association humanitaire, enfants Vietnam, aide enfance, loto caritatif, Lotus d'Enfance, don association, bénévolat, éducation Vietnam, alimentation enfants, Ouzouer-sur-Trézée, Bonny-sur-Loire" />
   <meta name="author" content="Lotus d'Enfance" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://lotus-denfance.fr/" />
+  <link rel="alternate" hreflang="fr" href="https://lotus-denfance.fr/" />
+  <link rel="alternate" hreflang="en" href="https://lotus-denfance.fr/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://lotus-denfance.fr/" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- ══ Open Graph (Facebook, LinkedIn…) ══ -->
@@ -49,10 +52,11 @@
 
   <link rel="icon" type="image/png" href="Photo_Lotus/Logo_Lotus.png" />
   <link rel="apple-touch-icon" href="Photo_Lotus/Logo_Lotus.png" />
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="lang.js?v=1"></script>
 </head>
 <body>
 
@@ -70,25 +74,31 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#qui-sommes-nous" data-section="qui-sommes-nous">L'Association</a></li>
-        <li><a href="#nos-actions" data-section="nos-actions">Nos Actions</a></li>
-        <li><a href="#agenda" data-section="agenda">Agenda</a></li>
+        <li><a href="#qui-sommes-nous" data-section="qui-sommes-nous" data-i18n="nav.association">L'Association</a></li>
+        <li><a href="#nos-actions" data-section="nos-actions" data-i18n="nav.actions">Nos Actions</a></li>
+        <li><a href="#agenda" data-section="agenda" data-i18n="nav.agenda">Agenda</a></li>
         <li class="nav-has-dropdown">
           <button class="nav-dropdown-toggle" aria-expanded="false">
-            Agir <span class="nav-arrow">▾</span>
+            <span data-i18n="nav.agir">Agir</span> <span class="nav-arrow">▾</span>
           </button>
           <ul class="nav-dropdown">
-            <li><a href="#soutenir" data-section="soutenir">💛 Nous soutenir</a></li>
-            <li><a href="#boutique" data-section="boutique">👕 Boutique</a></li>
-            <li><a href="boutique.html" >🛍️ Catalogue complet</a></li>
-            <li><a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener">❤ Faire un don</a></li>
+            <li><a href="#soutenir" data-section="soutenir" data-i18n="nav.support">💛 Nous soutenir</a></li>
+            <li><a href="#boutique" data-section="boutique" data-i18n="nav.shop">👕 Boutique</a></li>
+            <li><a href="boutique.html" data-i18n="nav.catalogue">🛍️ Catalogue complet</a></li>
+            <li><a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" data-i18n="nav.donate">❤ Faire un don</a></li>
           </ul>
         </li>
-        <li><a href="#contact" data-section="contact">Contact</a></li>
+        <li><a href="#contact" data-section="contact" data-i18n="nav.contact">Contact</a></li>
         <li class="nav-cta">
-          <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-don">
+          <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-don" data-i18n="nav.donate">
             ❤ Faire un don
           </a>
+        </li>
+        <li class="nav-lang">
+          <div class="lang-switch" role="group" aria-label="Langue / Language">
+            <button type="button" data-lang-btn="fr" onclick="setLang('fr')">FR</button>
+            <button type="button" data-lang-btn="en" onclick="setLang('en')">EN</button>
+          </div>
         </li>
       </ul>
     </nav>
@@ -98,26 +108,26 @@
   <section id="accueil" class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <span class="hero-badge">Association loi 1901 · À but non lucratif</span>
-      <h1>Ensemble, offrons un avenir<br /><em>aux enfants du Vietnam</em></h1>
-      <p class="hero-desc">
+      <span class="hero-badge" data-i18n="hero.badge">Association loi 1901 · À but non lucratif</span>
+      <h1 data-i18n-html="hero.title">Ensemble, offrons un avenir<br /><em>aux enfants du Vietnam</em></h1>
+      <p class="hero-desc" data-i18n="hero.desc">
         Lotus d'Enfance agit pour améliorer les conditions de vie des enfants défavorisés
         à travers l'accès à l'éducation et à une alimentation saine.
       </p>
       <div class="hero-actions">
-        <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-primary">
+        <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-primary" data-i18n="hero.donate">
           ❤ Faire un don
         </a>
-        <a href="#qui-sommes-nous" class="btn-secondary">Découvrir l'association</a>
+        <a href="#qui-sommes-nous" class="btn-secondary" data-i18n="hero.discover">Découvrir l'association</a>
       </div>
     </div>
     <div class="hero-visual">
       <div class="hero-card">
         <div class="hero-card-icon">🌸</div>
-        <p class="hero-card-quote">
+        <p class="hero-card-quote" data-i18n="hero.quote">
           "Deux besoins essentiels pour construire un avenir digne et porteur d'espoir : l'éducation et une alimentation saine."
         </p>
-        <span class="hero-card-author">— Thi Koyuncu, fondatrice</span>
+        <span class="hero-card-author" data-i18n="hero.author">— Thi Koyuncu, fondatrice</span>
       </div>
     </div>
   </section>
@@ -129,22 +139,22 @@
         <div class="stat-card">
           <div class="stat-icon">📚</div>
           <div class="stat-number" data-target="150">0</div>
-          <div class="stat-label">Enfants soutenus</div>
+          <div class="stat-label" data-i18n="stats.children">Enfants soutenus</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">🍚</div>
           <div class="stat-number" data-target="3000">0</div>
-          <div class="stat-label">Repas distribués</div>
+          <div class="stat-label" data-i18n="stats.meals">Repas distribués</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">🏘️</div>
           <div class="stat-number" data-target="12">0</div>
-          <div class="stat-label">Villages et quartiers aidés</div>
+          <div class="stat-label" data-i18n="stats.villages">Villages et quartiers aidés</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">🤝</div>
           <div class="stat-number" data-target="100">0</div>
-          <div class="stat-label">% des fonds reversés sur place</div>
+          <div class="stat-label" data-i18n="stats.funds">% des fonds reversés sur place</div>
         </div>
       </div>
     </div>
@@ -154,25 +164,25 @@
   <section id="qui-sommes-nous" class="about">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">Notre histoire</span>
-        <h2>Qui sommes-nous ?</h2>
-        <p>Une association née d'un engagement sincère pour l'enfance défavorisée</p>
+        <span class="section-badge" data-i18n="about.badge">Notre histoire</span>
+        <h2 data-i18n="about.title">Qui sommes-nous ?</h2>
+        <p data-i18n="about.subtitle">Une association née d'un engagement sincère pour l'enfance défavorisée</p>
       </div>
       <div class="about-grid">
         <div class="about-text">
-          <p>
+          <p data-i18n-html="about.p1">
             <strong>Lotus d'Enfance</strong> est une association à but non lucratif régie par la loi 1901,
             fondée par <strong>Thi Koyuncu</strong>, dont l'engagement pour les enfants défavorisés du Vietnam
             a débuté comme une campagne de collecte de fonds avant de prendre la forme d'une véritable
             structure associative.
           </p>
-          <p>
+          <p data-i18n-html="about.p2">
             Notre mission est claire : <em>améliorer les conditions de vie des enfants les plus vulnérables
             à travers deux leviers fondamentaux</em> — l'accès à l'éducation et à une alimentation équilibrée.
             Ces deux besoins essentiels sont le socle sur lequel chaque enfant peut construire un avenir
             digne et porteur d'espoir.
           </p>
-          <p>
+          <p data-i18n="about.p3">
             Nos actions se concentrent dans les villages et quartiers précaires du Vietnam, là où les besoins
             sont les plus criants. Grâce à nos bénévoles et partenaires locaux, chaque euro collecté est
             utilisé intégralement sur place.
@@ -181,22 +191,22 @@
             <div class="value-item">
               <span class="value-icon">🌸</span>
               <div>
-                <strong>Transparence</strong>
-                <p>100 % des dons sont reversés directement aux bénéficiaires</p>
+                <strong data-i18n="about.value1.t">Transparence</strong>
+                <p data-i18n="about.value1.d">100 % des dons sont reversés directement aux bénéficiaires</p>
               </div>
             </div>
             <div class="value-item">
               <span class="value-icon">🌱</span>
               <div>
-                <strong>Ancrage local</strong>
-                <p>Nos bénévoles et partenaires sont implantés au Vietnam</p>
+                <strong data-i18n="about.value2.t">Ancrage local</strong>
+                <p data-i18n="about.value2.d">Nos bénévoles et partenaires sont implantés au Vietnam</p>
               </div>
             </div>
             <div class="value-item">
               <span class="value-icon">💛</span>
               <div>
-                <strong>Solidarité</strong>
-                <p>Chaque enfant mérite une chance égale de s'épanouir</p>
+                <strong data-i18n="about.value3.t">Solidarité</strong>
+                <p data-i18n="about.value3.d">Chaque enfant mérite une chance égale de s'épanouir</p>
               </div>
             </div>
           </div>
@@ -207,8 +217,8 @@
               <img src="Photo_Lotus/Thi_Koyuncu.webp" alt="Thi Koyuncu — Fondatrice de Lotus d'Enfance" class="avatar-photo" />
             </div>
             <h3>Thi Koyuncu</h3>
-            <span class="portrait-role">Fondatrice de l'association</span>
-            <p>
+            <span class="portrait-role" data-i18n="about.founder.role">Fondatrice de l'association</span>
+            <p data-i18n="about.founder.desc">
               Animée par son attachement aux enfants défavorisés du Vietnam,
               Thi a transformé son engagement personnel en une association structurée,
               capable d'agir durablement pour améliorer des vies.
@@ -223,57 +233,57 @@
   <section id="nos-actions" class="actions">
     <div class="container">
       <div class="section-header light">
-        <span class="section-badge">Ce que nous faisons</span>
-        <h2>Nos Actions</h2>
-        <p>Trois axes d'intervention pour un impact durable sur la vie des enfants</p>
+        <span class="section-badge" data-i18n="actions.badge">Ce que nous faisons</span>
+        <h2 data-i18n="actions.title">Nos Actions</h2>
+        <p data-i18n="actions.subtitle">Trois axes d'intervention pour un impact durable sur la vie des enfants</p>
       </div>
       <div class="actions-grid">
         <div class="action-card">
           <div class="action-icon">📚</div>
-          <h3>Accès à l'éducation</h3>
-          <p>
+          <h3 data-i18n="actions.edu.t">Accès à l'éducation</h3>
+          <p data-i18n="actions.edu.p">
             Nous fournissons aux enfants les outils indispensables à leur scolarité :
             cahiers, stylos, uniformes scolaires, livres et autres fournitures.
             Parce que l'éducation est le premier pas vers un avenir meilleur.
           </p>
           <ul class="action-list">
-            <li>Fournitures scolaires complètes</li>
-            <li>Uniformes et tenues adaptées</li>
-            <li>Livres et supports pédagogiques</li>
+            <li data-i18n="actions.edu.l1">Fournitures scolaires complètes</li>
+            <li data-i18n="actions.edu.l2">Uniformes et tenues adaptées</li>
+            <li data-i18n="actions.edu.l3">Livres et supports pédagogiques</li>
           </ul>
         </div>
         <div class="action-card featured">
           <div class="action-icon">🍚</div>
-          <h3>Alimentation saine</h3>
-          <p>
+          <h3 data-i18n="actions.food.t">Alimentation saine</h3>
+          <p data-i18n="actions.food.p">
             La malnutrition reste un obstacle majeur au développement de nombreux enfants.
             Nous finançons des repas équilibrés pour les enfants malnutris afin qu'ils
             grandissent en bonne santé et restent scolarisés.
           </p>
           <ul class="action-list">
-            <li>Repas nutritifs quotidiens</li>
-            <li>Lutte contre la malnutrition</li>
-            <li>Suivi des enfants bénéficiaires</li>
+            <li data-i18n="actions.food.l1">Repas nutritifs quotidiens</li>
+            <li data-i18n="actions.food.l2">Lutte contre la malnutrition</li>
+            <li data-i18n="actions.food.l3">Suivi des enfants bénéficiaires</li>
           </ul>
         </div>
         <div class="action-card">
           <div class="action-icon">🏘️</div>
-          <h3>Soutien aux familles</h3>
-          <p>
+          <h3 data-i18n="actions.family.t">Soutien aux familles</h3>
+          <p data-i18n="actions.family.p">
             Nous accompagnons les familles les plus vulnérables dans les villages
             et quartiers précaires du Vietnam, afin de créer un environnement
             stable et propice au développement de leurs enfants.
           </p>
           <ul class="action-list">
-            <li>Aide directe aux familles</li>
-            <li>Intervention dans les villages isolés</li>
-            <li>Coordination avec partenaires locaux</li>
+            <li data-i18n="actions.family.l1">Aide directe aux familles</li>
+            <li data-i18n="actions.family.l2">Intervention dans les villages isolés</li>
+            <li data-i18n="actions.family.l3">Coordination avec partenaires locaux</li>
           </ul>
         </div>
       </div>
       <div class="actions-cta">
-        <p>Vos dons permettent de financer directement ces actions sur le terrain.</p>
-        <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-primary">
+        <p data-i18n="actions.cta">Vos dons permettent de financer directement ces actions sur le terrain.</p>
+        <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-primary" data-i18n="actions.cta.btn">
           ❤ Soutenir nos actions
         </a>
       </div>
@@ -284,33 +294,33 @@
   <section class="how-it-works">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">Transparence</span>
-        <h2>Comment fonctionnent vos dons ?</h2>
-        <p>Un processus simple, direct et entièrement transparent</p>
+        <span class="section-badge" data-i18n="how.badge">Transparence</span>
+        <h2 data-i18n="how.title">Comment fonctionnent vos dons ?</h2>
+        <p data-i18n="how.subtitle">Un processus simple, direct et entièrement transparent</p>
       </div>
       <div class="steps-grid">
         <div class="step">
           <div class="step-number">1</div>
-          <h3>Vous donnez</h3>
-          <p>Vous effectuez un don sécurisé via notre page HelloAsso en quelques clics.</p>
+          <h3 data-i18n="how.s1.t">Vous donnez</h3>
+          <p data-i18n="how.s1.p">Vous effectuez un don sécurisé via notre page HelloAsso en quelques clics.</p>
         </div>
         <div class="step-arrow">→</div>
         <div class="step">
           <div class="step-number">2</div>
-          <h3>On collecte</h3>
-          <p>Les fonds sont centralisés et gérés par l'association avec une totale transparence.</p>
+          <h3 data-i18n="how.s2.t">On collecte</h3>
+          <p data-i18n="how.s2.p">Les fonds sont centralisés et gérés par l'association avec une totale transparence.</p>
         </div>
         <div class="step-arrow">→</div>
         <div class="step">
           <div class="step-number">3</div>
-          <h3>On agit</h3>
-          <p>100 % des fonds sont acheminés vers nos bénévoles et partenaires locaux au Vietnam.</p>
+          <h3 data-i18n="how.s3.t">On agit</h3>
+          <p data-i18n="how.s3.p">100 % des fonds sont acheminés vers nos bénévoles et partenaires locaux au Vietnam.</p>
         </div>
         <div class="step-arrow">→</div>
         <div class="step">
           <div class="step-number">4</div>
-          <h3>Les enfants bénéficient</h3>
-          <p>Fournitures, repas et soutien parviennent directement aux enfants dans le besoin.</p>
+          <h3 data-i18n="how.s4.t">Les enfants bénéficient</h3>
+          <p data-i18n="how.s4.p">Fournitures, repas et soutien parviennent directement aux enfants dans le besoin.</p>
         </div>
       </div>
     </div>
@@ -320,24 +330,24 @@
   <section id="soutenir" class="soutenir">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">Agir à nos côtés</span>
-        <h2>Comment nous soutenir ?</h2>
-        <p>Plusieurs façons de contribuer à notre mission, selon vos envies et vos moyens</p>
+        <span class="section-badge" data-i18n="support.badge">Agir à nos côtés</span>
+        <h2 data-i18n="support.title">Comment nous soutenir ?</h2>
+        <p data-i18n="support.subtitle">Plusieurs façons de contribuer à notre mission, selon vos envies et vos moyens</p>
       </div>
       <div class="soutenir-grid">
 
         <div class="soutenir-card">
           <div class="soutenir-card-icon">🎰</div>
-          <h3>Participer à nos événements</h3>
-          <p>
+          <h3 data-i18n="support.events.t">Participer à nos événements</h3>
+          <p data-i18n-html="support.events.p">
             Chaque année, Lotus d'Enfance organise des soirées caritatives conviviales ouvertes à tous.
             Notre loto caritatif a réuni plus de <strong>150 participants</strong> dans une salle comble,
             animée par nos bénévoles passionnés. Entre rires, suspense et générosité,
             ces soirées sont avant tout des moments de partage qui font avancer notre cause.
           </p>
-          <a href="#agenda" class="btn-outline-green">Voir nos prochains événements →</a>
+          <a href="#agenda" class="btn-outline-green" data-i18n="support.events.btn">Voir nos prochains événements →</a>
           <div class="loto-gallery">
-            <img src="Photo_Lotus/Loto/f90e2964-2896-45ad-b035-2f756593ad97.jfif" alt="Salle du loto caritatif comble" loading="lazy" />
+            <img src="Photo_Lotus/Loto/f90e2964-2896-45ad-b035-2f756593ad97.jfif" alt="Salle du loto caritatif comble" data-i18n-alt="support.events.t" loading="lazy" />
             <img src="Photo_Lotus/Loto/4ff0dcd5-31a1-402d-af05-9c78902c1122.jfif" alt="Animation du loto par les bénévoles" loading="lazy" />
             <img src="Photo_Lotus/Loto/6887e238-5ac7-4deb-a81a-e4f520394b64.jfif" alt="Tirage des boules de loto" loading="lazy" />
           </div>
@@ -346,19 +356,19 @@
         <div class="soutenir-right">
           <div class="soutenir-card mini">
             <div class="soutenir-card-icon">❤️</div>
-            <h3>Faire un don direct</h3>
-            <p>
+            <h3 data-i18n="support.donate.t">Faire un don direct</h3>
+            <p data-i18n="support.donate.p">
               Vous ne pouvez pas vous déplacer mais souhaitez agir ? Faites un don en ligne en quelques clics
               via notre page HelloAsso sécurisée. Chaque centime est intégralement reversé aux enfants du Vietnam.
               Un reçu fiscal vous sera automatiquement envoyé.
             </p>
-            <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-primary">❤ Faire un don maintenant</a>
+            <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-primary" data-i18n="support.donate.btn">❤ Faire un don maintenant</a>
           </div>
 
           <div class="soutenir-card mini">
             <div class="soutenir-card-icon">👕</div>
-            <h3>Acheter un goodie solidaire</h3>
-            <p>
+            <h3 data-i18n="support.shop.t">Acheter un goodie solidaire</h3>
+            <p data-i18n="support.shop.p">
               Chaque achat de notre collection Lotus d'Enfance est un geste concret de solidarité.
               T-shirts, parkas, sacs à dos, tote bags… Portez nos couleurs et financez directement
               nos projets de terrain au Vietnam.
@@ -367,7 +377,7 @@
               <img src="Photo_Lotus/Atelier/24eb4ecd-caad-41a2-b338-85b62d5c20ee.jfif" alt="Atelier confection de badges" loading="lazy" />
               <img src="Photo_Lotus/Atelier/db5de461-7573-4594-9195-ae69ceda173c.jfif" alt="Petite fille souriante à l'atelier" loading="lazy" />
             </div>
-            <a href="#boutique" class="btn-outline-green">Découvrir la boutique →</a>
+            <a href="#boutique" class="btn-outline-green" data-i18n="support.shop.btn">Découvrir la boutique →</a>
           </div>
         </div>
 
@@ -379,20 +389,20 @@
   <section id="agenda" class="agenda">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">Agenda & Actualités</span>
-        <h2>Nos événements</h2>
-        <p>Rejoignez-nous lors de nos prochains rendez-vous caritatifs</p>
+        <span class="section-badge" data-i18n="agenda.badge">Agenda & Actualités</span>
+        <h2 data-i18n="agenda.title">Nos événements</h2>
+        <p data-i18n="agenda.subtitle">Rejoignez-nous lors de nos prochains rendez-vous caritatifs</p>
       </div>
       <div class="events-grid">
         <div class="event-card past">
           <div class="event-date">
             <span class="event-day">04</span>
-            <span class="event-month">mai 2026</span>
+            <span class="event-month" data-i18n="agenda.past.month">mai 2026</span>
           </div>
           <div class="event-info">
-            <span class="event-tag">Passé</span>
-            <h3>🎰 Loto Caritatif</h3>
-            <p>
+            <span class="event-tag" data-i18n="agenda.past.tag">Passé</span>
+            <h3 data-i18n="agenda.past.t">🎰 Loto Caritatif</h3>
+            <p data-i18n="agenda.past.p">
               Une soirée chaleureuse et festive au profit des enfants du Vietnam,
               avec plus de 150 participants réunis dans la bonne humeur.
               Merci à tous pour votre générosité et votre présence !
@@ -402,28 +412,28 @@
         <div class="event-card upcoming">
           <div class="event-date">
             <span class="event-day">—</span>
-            <span class="event-month">À venir</span>
+            <span class="event-month" data-i18n="agenda.next.month">À venir</span>
           </div>
           <div class="event-info">
-            <span class="event-tag upcoming-tag">Prochainement</span>
-            <h3>📣 Prochain événement</h3>
-            <p>
+            <span class="event-tag upcoming-tag" data-i18n="agenda.next.tag">Prochainement</span>
+            <h3 data-i18n="agenda.next.t">📣 Prochain événement</h3>
+            <p data-i18n="agenda.next.p">
               Restez connectés ! Notre prochain événement caritatif sera annoncé
               très prochainement sur cette page et sur notre page Facebook.
             </p>
-            <a href="https://www.facebook.com/profile.php?id=61584126986437" target="_blank" rel="noopener" class="event-link">
+            <a href="https://www.facebook.com/profile.php?id=61584126986437" target="_blank" rel="noopener" class="event-link" data-i18n="agenda.next.link">
               Suivre sur Facebook →
             </a>
           </div>
         </div>
       </div>
       <div class="news-section">
-        <h3>Suivez notre actualité</h3>
-        <p>
+        <h3 data-i18n="agenda.news.t">Suivez notre actualité</h3>
+        <p data-i18n="agenda.news.p">
           Pour ne rien manquer de nos actions et événements,
           suivez-nous sur Facebook.
         </p>
-        <a href="https://www.facebook.com/profile.php?id=61584126986437" target="_blank" rel="noopener" class="btn-outline">
+        <a href="https://www.facebook.com/profile.php?id=61584126986437" target="_blank" rel="noopener" class="btn-outline" data-i18n="agenda.news.btn">
           Notre page Facebook
         </a>
       </div>
@@ -434,63 +444,63 @@
   <section id="boutique" class="boutique">
     <div class="container">
       <div class="section-header light">
-        <span class="section-badge">Solidarité &amp; style</span>
-        <h2>Boutique Lotus d'Enfance</h2>
-        <p>Chaque achat finance directement nos projets au Vietnam · Articles sur commande · Livraison offerte</p>
+        <span class="section-badge" data-i18n="shop.badge">Solidarité &amp; style</span>
+        <h2 data-i18n="shop.title">Boutique Lotus d'Enfance</h2>
+        <p data-i18n="shop.subtitle">Chaque achat finance directement nos projets au Vietnam · Articles sur commande · Livraison offerte</p>
       </div>
 
       <!-- Collection permanente — 4 articles phare -->
       <div class="boutique-collection">
-        <h3 class="collection-title">🟢 Collection permanente</h3>
+        <h3 class="collection-title" data-i18n="shop.perm.title">🟢 Collection permanente</h3>
         <div class="products-grid">
           <div class="product-card">
             <img src="Photo_Lotus/Merch/Tee_shirt_recto.webp" alt="T-shirt manches courtes" class="product-img" loading="lazy" />
-            <span class="product-name">T-shirt manches courtes</span>
+            <span class="product-name" data-i18n="shop.tshirt">T-shirt manches courtes</span>
             <span class="product-price">25 €</span>
-            <span class="product-impact">soit 2 semaines de repas équilibrés</span>
+            <span class="product-impact" data-i18n="shop.impact.tshirt">soit 2 semaines de repas équilibrés</span>
           </div>
           <div class="product-card">
             <img src="Photo_Lotus/Merch/Photo_Parka.webp" alt="Parka bleue" class="product-img" loading="lazy" />
-            <span class="product-name">Parka</span>
+            <span class="product-name" data-i18n="shop.parka">Parka</span>
             <span class="product-price">75 €</span>
-            <span class="product-impact">soit 5 semaines de repas pour un enfant</span>
+            <span class="product-impact" data-i18n="shop.impact.parka">soit 5 semaines de repas pour un enfant</span>
           </div>
           <div class="product-card">
             <img src="Photo_Lotus/Merch/Casquette2.jfif" alt="Casquette bleue" class="product-img" loading="lazy" />
-            <span class="product-name">Casquette</span>
+            <span class="product-name" data-i18n="shop.cap">Casquette</span>
             <span class="product-price">25 €</span>
-            <span class="product-impact">soit 2 semaines de repas équilibrés</span>
+            <span class="product-impact" data-i18n="shop.impact.cap">soit 2 semaines de repas équilibrés</span>
           </div>
           <div class="product-card">
             <img src="Photo_Lotus/Merch/Photo_Sac_Bleu.webp" alt="Sac à dos bleu" class="product-img" loading="lazy" />
-            <span class="product-name">Sac à dos</span>
+            <span class="product-name" data-i18n="shop.backpack">Sac à dos</span>
             <span class="product-price">45 €</span>
-            <span class="product-impact">soit 3 semaines de repas pour un enfant</span>
+            <span class="product-impact" data-i18n="shop.impact.backpack">soit 3 semaines de repas pour un enfant</span>
           </div>
         </div>
       </div>
 
       <!-- Bannière catalogue complet -->
       <div class="catalogue-banner">
-        <div class="catalogue-banner-count">15+<span>articles</span></div>
+        <div class="catalogue-banner-count">15+<span data-i18n="shop.banner.count">articles</span></div>
         <div class="catalogue-banner-text">
-          <strong>Bien plus dans notre catalogue complet !</strong>
-          <p>Bob, T-shirt gros logo, Thermos 500ml (4 coloris), Tote Bag, Sacoche, Mini Sac à main, Porte-cartes, Mini Porte-Clé, Lampe Torche, Verres à vin… Découvrez tous nos articles solidaires.</p>
+          <strong data-i18n="shop.banner.strong">Bien plus dans notre catalogue complet !</strong>
+          <p data-i18n="shop.banner.p">Bob, T-shirt gros logo, Thermos 500ml (4 coloris), Tote Bag, Sacoche, Mini Sac à main, Porte-cartes, Mini Porte-Clé, Lampe Torche, Verres à vin… Découvrez tous nos articles solidaires.</p>
         </div>
         <a href="boutique.html#catalogue" class="btn-boutique-outline" style="flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
-          Voir le catalogue
+          <span data-i18n="shop.banner.btn">Voir le catalogue</span>
         </a>
       </div>
 
       <!-- Collection Vietnam 2026 — 4 articles phare -->
       <div class="boutique-collection vietnam-collection">
         <div class="vietnam-header">
-          <span class="vietnam-badge">🌟 Collection limitée</span>
+          <span class="vietnam-badge" data-i18n="shop.viet.badge">🌟 Collection limitée</span>
           <h3 class="collection-title">Vietnam 2026</h3>
-          <p class="vietnam-desc">
+          <p class="vietnam-desc" data-i18n-html="shop.viet.desc">
             <strong>Mission 2026 — 1 € = 1 repas.</strong><br />
             Notre collection limitée dédiée à notre mission de terrain 2026.
             Chaque article vendu finance directement un repas pour un enfant au Vietnam.
@@ -504,27 +514,27 @@
         <div class="products-grid vietnam-products">
           <div class="product-card viet">
             <img src="Photo_Lotus/Merch/Parka_noir_recto.webp" alt="Parka noire" class="product-img" loading="lazy" />
-            <span class="product-name">Parka noire</span>
+            <span class="product-name" data-i18n="shop.viet.parka">Parka noire</span>
             <span class="product-price">75 €</span>
-            <span class="product-impact">soit 75 repas offerts à des enfants</span>
+            <span class="product-impact" data-i18n="shop.viet.impact.parka">soit 75 repas offerts à des enfants</span>
           </div>
           <div class="product-card viet">
             <img src="Photo_Lotus/Merch/Casquette1.jfif" alt="Casquette noire" class="product-img" loading="lazy" />
-            <span class="product-name">Casquette</span>
+            <span class="product-name" data-i18n="shop.viet.cap">Casquette</span>
             <span class="product-price">25 €</span>
-            <span class="product-impact">soit 25 repas pour un enfant</span>
+            <span class="product-impact" data-i18n="shop.viet.impact.cap">soit 25 repas pour un enfant</span>
           </div>
           <div class="product-card viet">
             <img src="Photo_Lotus/Merch/Sacoche_Noir.webp" alt="Sacoche noire" class="product-img" loading="lazy" />
-            <span class="product-name">Sacoche</span>
+            <span class="product-name" data-i18n="shop.viet.bag">Sacoche</span>
             <span class="product-price">30 €</span>
-            <span class="product-impact">soit 1 mois de repas pour un enfant</span>
+            <span class="product-impact" data-i18n="shop.viet.impact.bag">soit 1 mois de repas pour un enfant</span>
           </div>
           <div class="product-card viet">
             <img src="Photo_Lotus/Merch/Porte_Carte2.webp" alt="Porte-cartes" class="product-img" loading="lazy" />
-            <span class="product-name">Porte-cartes</span>
+            <span class="product-name" data-i18n="shop.viet.card">Porte-cartes</span>
             <span class="product-price">25 €</span>
-            <span class="product-impact">soit 25 repas pour un enfant</span>
+            <span class="product-impact" data-i18n="shop.viet.impact.card">soit 25 repas pour un enfant</span>
           </div>
         </div>
       </div>
@@ -532,25 +542,25 @@
       <div class="boutique-event-info">
         <span class="boutique-event-icon">🎪</span>
         <div>
-          <strong>Disponibles également lors de nos événements !</strong>
-          <p>Tous nos goodies sont en vente directe sur notre stand lors de chaque soirée caritative.
+          <strong data-i18n="shop.event.strong">Disponibles également lors de nos événements !</strong>
+          <p data-i18n="shop.event.p">Tous nos goodies sont en vente directe sur notre stand lors de chaque soirée caritative.
           Venez découvrir et essayer la collection en vrai — c'est aussi l'occasion de nous rencontrer !</p>
         </div>
       </div>
       <div class="boutique-cta">
-        <p>📦 Articles sur commande · Livraison offerte · 100 % des bénéfices reversés à l'association</p>
+        <p data-i18n="shop.cta.p">📦 Articles sur commande · Livraison offerte · 100 % des bénéfices reversés à l'association</p>
         <div class="boutique-actions">
           <a href="boutique.html#catalogue" class="btn-boutique-outline">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
-            Voir le catalogue complet
+            <span data-i18n="shop.cta.catalogue">Voir le catalogue complet</span>
           </a>
           <a href="mailto:lotusdenfance@gmail.com?subject=Commande boutique Lotus d'Enfance" class="btn-boutique-primary">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
             </svg>
-            Commander par email
+            <span data-i18n="shop.cta.email">Commander par email</span>
           </a>
         </div>
       </div>
@@ -561,9 +571,9 @@
   <section id="remerciements" class="remerciements">
     <div class="container">
       <div class="remerciements-inner">
-        <span class="section-badge">Gratitude</span>
-        <h2>Un immense merci 🙏</h2>
-        <p class="remerciements-intro">
+        <span class="section-badge" data-i18n="thanks.badge">Gratitude</span>
+        <h2 data-i18n="thanks.title">Un immense merci 🙏</h2>
+        <p class="remerciements-intro" data-i18n="thanks.intro">
           Chaque action de Lotus d'Enfance existe grâce à vous. Bénévoles, participants, donateurs, sponsors —
           vous êtes le cœur battant de notre association. Merci du fond du cœur.
         </p>
@@ -572,19 +582,19 @@
         <div class="remerciements-grid">
           <div class="remerciements-card">
             <div class="remerciements-icon">🏛️</div>
-            <h3>À la Mairie d'Ouzouer-sur-Trézée</h3>
-            <p>
+            <h3 data-i18n="thanks.mairie.t">À la Mairie d'Ouzouer-sur-Trézée</h3>
+            <p data-i18n-html="thanks.mairie.p1">
               Nos lotos caritatifs n'auraient jamais pu rassembler plus de <strong>700 personnes</strong> (sur plusieurs éditions)
               sans le soutien précieux et généreux de la <strong>Mairie d'Ouzouer-sur-Trézée</strong>.
               Grâce à leur accueil chaleureux et à la mise à disposition de leur salle municipale,
               nous avons pu organiser des soirées dignes, festives et entièrement au service de notre cause.
             </p>
-            <p>
+            <p data-i18n="thanks.mairie.p2">
               Ce partenariat est bien plus que logistique : il est le reflet d'une solidarité locale
               qui donne tout son sens à nos actions. Savoir que notre commune croit en notre mission
               nous encourage à aller encore plus loin pour les enfants du Vietnam.
             </p>
-            <p class="remerciements-signature">— Thi Koyuncu &amp; toute l'équipe Lotus d'Enfance ❤</p>
+            <p class="remerciements-signature" data-i18n="thanks.mairie.sign">— Thi Koyuncu &amp; toute l'équipe Lotus d'Enfance ❤</p>
           </div>
           <div class="remerciements-photos">
             <img src="Photo_Lotus/Loto/cf1e6f52-12bf-4a4c-a56e-be495edaabc4.jfif" alt="Salle mise à disposition par la mairie" loading="lazy" />
@@ -596,8 +606,8 @@
         <div class="merci-cards">
           <div class="merci-card">
             <div class="merci-icon">🌸</div>
-            <h3>Nos bénévoles</h3>
-            <p>
+            <h3 data-i18n="thanks.vol.t">Nos bénévoles</h3>
+            <p data-i18n-html="thanks.vol.p">
               Ils donnent de leur temps, de leur énergie et de leur cœur sans compter.
               Présents à chaque événement pour accueillir, animer, préparer et ranger,
               nos bénévoles sont l'âme de l'association. Sans eux, rien ne serait possible.
@@ -606,8 +616,8 @@
           </div>
           <div class="merci-card">
             <div class="merci-icon">🎉</div>
-            <h3>Nos participants</h3>
-            <p>
+            <h3 data-i18n="thanks.part.t">Nos participants</h3>
+            <p data-i18n-html="thanks.part.p">
               Chaque personne qui franchit la porte de nos soirées contribue directement
               à changer la vie d'un enfant au Vietnam. Votre présence, votre bonne humeur
               et votre enthousiasme rendent chaque événement unique et inoubliable.
@@ -616,8 +626,8 @@
           </div>
           <div class="merci-card">
             <div class="merci-icon">❤️</div>
-            <h3>Nos donateurs</h3>
-            <p>
+            <h3 data-i18n="thanks.donors.t">Nos donateurs</h3>
+            <p data-i18n-html="thanks.donors.p">
               Qu'il s'agisse d'un premier don ou d'un soutien fidèle depuis nos débuts,
               chaque geste de générosité a un impact concret et mesurable sur le terrain.
               Grâce à vous, des enfants mangent, apprennent et grandissent dans la dignité.
@@ -626,20 +636,20 @@
           </div>
           <div class="merci-card">
             <div class="merci-icon">🤝</div>
-            <h3>Nos sponsors &amp; partenaires</h3>
-            <p>
+            <h3 data-i18n="thanks.sponsors.t">Nos sponsors &amp; partenaires</h3>
+            <p data-i18n-html="thanks.sponsors.p">
               Leur soutien financier et matériel amplifie notre capacité d'action.
               En s'associant à notre cause, ils témoignent d'un engagement solidaire
               qui va bien au-delà du simple partenariat. Ensemble, nous construisons
               un avenir meilleur. <strong>Merci pour votre engagement.</strong>
             </p>
             <ul class="merci-sponsors-list">
-              <li>🏦 <strong>CIC Montereau-Fault-Yonne (77)</strong> — Soutien financier</li>
-              <li>🔊 <strong>Stars Europe Briare (45)</strong> — Matériel sonore</li>
-              <li>🛒 <strong>Super U Bonny-sur-Loire (45)</strong> — Lots</li>
-              <li>💎 <strong>Crypto.com</strong> — Partenaire sponsor</li>
+              <li data-i18n-html="thanks.sponsors.l1">🏦 <strong>CIC Montereau-Fault-Yonne (77)</strong> — Soutien financier</li>
+              <li data-i18n-html="thanks.sponsors.l2">🔊 <strong>Stars Europe Briare (45)</strong> — Matériel sonore</li>
+              <li data-i18n-html="thanks.sponsors.l3">🛒 <strong>Super U Bonny-sur-Loire (45)</strong> — Lots</li>
+              <li data-i18n-html="thanks.sponsors.l4">💎 <strong>Crypto.com</strong> — Partenaire sponsor</li>
             </ul>
-            <p class="merci-partenariat">
+            <p class="merci-partenariat" data-i18n-html="thanks.sponsors.open">
               Nous sommes ouverts à tout partenariat et sponsoring. Votre entreprise souhaite
               soutenir une cause concrète ? <strong>Contactez-nous</strong>, comme l'a fait Crypto.com avant vous.
             </p>
@@ -655,29 +665,29 @@
     <div class="container">
       <div class="donate-inner">
         <div class="donate-text">
-          <span class="section-badge light">Agir maintenant</span>
-          <h2>Faites un don,<br />changez une vie</h2>
-          <p>
+          <span class="section-badge light" data-i18n="donate.badge">Agir maintenant</span>
+          <h2 data-i18n-html="donate.title">Faites un don,<br />changez une vie</h2>
+          <p data-i18n="donate.p">
             Chaque don, quel que soit son montant, a un impact direct et concret
             sur la vie d'un enfant au Vietnam. Grâce à votre générosité,
             nous pouvons continuer à agir chaque jour.
           </p>
           <ul class="donate-impact">
-            <li><strong>5 €</strong> — un cahier et des stylos pour un enfant</li>
-            <li><strong>10 €</strong> — une semaine de repas équilibrés</li>
-            <li><strong>30 €</strong> — une tenue scolaire complète</li>
-            <li><strong>50 €</strong> — un mois de soutien complet pour un enfant</li>
+            <li data-i18n-html="donate.i1"><strong>5 €</strong> — un cahier et des stylos pour un enfant</li>
+            <li data-i18n-html="donate.i2"><strong>10 €</strong> — une semaine de repas équilibrés</li>
+            <li data-i18n-html="donate.i3"><strong>30 €</strong> — une tenue scolaire complète</li>
+            <li data-i18n-html="donate.i4"><strong>50 €</strong> — un mois de soutien complet pour un enfant</li>
           </ul>
         </div>
         <div class="donate-cta">
           <div class="donate-card">
             <div class="donate-icon">❤️</div>
-            <h3>Faire un don en ligne</h3>
-            <p>Plateforme sécurisée · Reçu fiscal disponible</p>
-            <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-donate">
+            <h3 data-i18n="donate.card.t">Faire un don en ligne</h3>
+            <p data-i18n="donate.card.p">Plateforme sécurisée · Reçu fiscal disponible</p>
+            <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="btn-donate" data-i18n="donate.card.btn">
               Je fais un don via HelloAsso
             </a>
-            <p class="donate-note">
+            <p class="donate-note" data-i18n-html="donate.card.note">
               🔒 Paiement 100 % sécurisé<br />
               📄 Reçu fiscal pour déduction d'impôts
             </p>
@@ -691,16 +701,16 @@
   <section id="contact" class="contact">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">Nous écrire</span>
-        <h2>Contact</h2>
-        <p>Une question, une envie de s'impliquer ? Nous vous répondrons avec plaisir.</p>
+        <span class="section-badge" data-i18n="contact.badge">Nous écrire</span>
+        <h2 data-i18n="contact.title">Contact</h2>
+        <p data-i18n="contact.subtitle">Une question, une envie de s'impliquer ? Nous vous répondrons avec plaisir.</p>
       </div>
       <div class="contact-grid">
         <div class="contact-info">
           <div class="contact-item">
             <div class="contact-icon">📧</div>
             <div>
-              <strong>Email</strong>
+              <strong data-i18n="contact.email.t">Email</strong>
               <p><a href="mailto:lotusdenfance@gmail.com">lotusdenfance@gmail.com</a></p>
             </div>
           </div>
@@ -711,7 +721,7 @@
               </svg>
             </div>
             <div>
-              <strong>Facebook</strong>
+              <strong data-i18n="contact.fb.t">Facebook</strong>
               <p>
                 <a href="https://www.facebook.com/profile.php?id=61584126986437" target="_blank" rel="noopener">
                   Lotus d'Enfance
@@ -722,44 +732,44 @@
           <div class="contact-item">
             <div class="contact-icon">🏛️</div>
             <div>
-              <strong>Statut juridique</strong>
-              <p>Association loi 1901 à but non lucratif</p>
+              <strong data-i18n="contact.status.t">Statut juridique</strong>
+              <p data-i18n="contact.status.d">Association loi 1901 à but non lucratif</p>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-icon">🌐</div>
             <div>
-              <strong>Dons en ligne</strong>
+              <strong data-i18n="contact.online.t">Dons en ligne</strong>
               <p><a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener">HelloAsso</a></p>
             </div>
           </div>
         </div>
         <form class="contact-form" id="contactForm">
           <div class="form-group">
-            <label for="name">Nom complet *</label>
-            <input type="text" id="name" name="name" required placeholder="Votre nom" />
+            <label for="name" data-i18n="contact.form.name">Nom complet *</label>
+            <input type="text" id="name" name="name" required placeholder="Votre nom" data-i18n-placeholder="contact.form.name.ph" />
           </div>
           <div class="form-group">
-            <label for="email">Email *</label>
-            <input type="email" id="email" name="email" required placeholder="votre@email.fr" />
+            <label for="email" data-i18n="contact.form.email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="votre@email.fr" data-i18n-placeholder="contact.form.email.ph" />
           </div>
           <div class="form-group">
-            <label for="subject">Sujet</label>
+            <label for="subject" data-i18n="contact.form.subject">Sujet</label>
             <select id="subject" name="subject">
-              <option value="">Choisir un sujet</option>
-              <option value="don">Faire un don</option>
-              <option value="benevole">Devenir bénévole</option>
-              <option value="partenariat">Partenariat</option>
-              <option value="info">Demande d'information</option>
-              <option value="autre">Autre</option>
+              <option value="" data-i18n="contact.form.subject.choose">Choisir un sujet</option>
+              <option value="don" data-i18n="contact.form.subject.don">Faire un don</option>
+              <option value="benevole" data-i18n="contact.form.subject.benevole">Devenir bénévole</option>
+              <option value="partenariat" data-i18n="contact.form.subject.partenariat">Partenariat</option>
+              <option value="info" data-i18n="contact.form.subject.info">Demande d'information</option>
+              <option value="autre" data-i18n="contact.form.subject.autre">Autre</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="message">Message *</label>
-            <textarea id="message" name="message" required rows="5" placeholder="Votre message..."></textarea>
+            <label for="message" data-i18n="contact.form.message">Message *</label>
+            <textarea id="message" name="message" required rows="5" placeholder="Votre message..." data-i18n-placeholder="contact.form.message.ph"></textarea>
           </div>
-          <button type="submit" class="btn-primary btn-full">Envoyer le message</button>
-          <div class="form-success" id="formSuccess">
+          <button type="submit" class="btn-primary btn-full" data-i18n="contact.form.submit">Envoyer le message</button>
+          <div class="form-success" id="formSuccess" data-i18n="contact.form.success">
             ✅ Votre logiciel de messagerie va s'ouvrir : cliquez sur « Envoyer » pour finaliser. Nous vous répondrons très prochainement.
           </div>
         </form>
@@ -775,7 +785,7 @@
           <div class="footer-logo">
             <img src="Photo_Lotus/Logo_Lotus.png" alt="Lotus d'Enfance" class="footer-logo-img" />
           </div>
-          <p>
+          <p data-i18n-html="footer.brand">
             Association loi 1901 à but non lucratif.<br />
             Agir pour les enfants défavorisés du Vietnam.
           </p>
@@ -788,44 +798,44 @@
           </div>
         </div>
         <div class="footer-links">
-          <h4>Navigation</h4>
+          <h4 data-i18n="footer.nav.t">Navigation</h4>
           <ul>
-            <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#qui-sommes-nous">Qui sommes-nous ?</a></li>
-            <li><a href="#nos-actions">Nos Actions</a></li>
-            <li><a href="#agenda">Agenda</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#accueil" data-i18n="footer.nav.home">Accueil</a></li>
+            <li><a href="#qui-sommes-nous" data-i18n="footer.nav.about">Qui sommes-nous ?</a></li>
+            <li><a href="#nos-actions" data-i18n="footer.nav.actions">Nos Actions</a></li>
+            <li><a href="#agenda" data-i18n="footer.nav.agenda">Agenda</a></li>
+            <li><a href="#contact" data-i18n="footer.nav.contact">Contact</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h4>Agir</h4>
+          <h4 data-i18n="footer.act.t">Agir</h4>
           <ul>
-            <li><a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener">Faire un don</a></li>
-            <li><a href="#contact">Devenir bénévole</a></li>
-            <li><a href="#contact">Nous contacter</a></li>
+            <li><a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" data-i18n="footer.act.donate">Faire un don</a></li>
+            <li><a href="#contact" data-i18n="footer.act.volunteer">Devenir bénévole</a></li>
+            <li><a href="#contact" data-i18n="footer.act.contact">Nous contacter</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h4>L'association</h4>
+          <h4 data-i18n="footer.assoc.t">L'association</h4>
           <ul>
-            <li><a href="#qui-sommes-nous">Notre histoire</a></li>
-            <li><a href="#nos-actions">Nos missions</a></li>
-            <li><a href="#don">Transparence financière</a></li>
+            <li><a href="#qui-sommes-nous" data-i18n="footer.assoc.story">Notre histoire</a></li>
+            <li><a href="#nos-actions" data-i18n="footer.assoc.missions">Nos missions</a></li>
+            <li><a href="#don" data-i18n="footer.assoc.transparency">Transparence financière</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 Lotus d'Enfance · Association loi 1901 · Tous droits réservés</p>
+        <p data-i18n="footer.bottom.rights">© 2026 Lotus d'Enfance · Association loi 1901 · Tous droits réservés</p>
         <p>
-          <a href="mentions-legales.html">Mentions légales</a> ·
-          <a href="confidentialite.html">Confidentialité</a> ·
-          Réalisé avec ❤ pour les enfants du Vietnam
+          <a href="mentions-legales.html" data-i18n="footer.bottom.legal">Mentions légales</a> ·
+          <a href="confidentialite.html" data-i18n="footer.bottom.privacy">Confidentialité</a> ·
+          <span data-i18n="footer.bottom.made">Réalisé avec ❤ pour les enfants du Vietnam</span>
         </p>
       </div>
     </div>
   </footer>
 
-  <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="fab-don" title="Faire un don">
+  <a href="https://www.helloasso.com/associations/lotus-d-enfance/formulaires/2" target="_blank" rel="noopener" class="fab-don" title="Faire un don" data-i18n-title="fab.donate">
     ❤
   </a>
 
