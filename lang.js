@@ -212,7 +212,8 @@
     "contact.form.message": "Message *",
     "contact.form.message.ph": "Your message...",
     "contact.form.submit": "Send the message",
-    "contact.form.success": "✅ Your email client will open: click \"Send\" to finalise. We will reply to you very soon.",
+    "contact.form.success": "✅ Thank you! Your message has been sent. We will reply to you very soon.",
+    "contact.form.error": "⚠️ An error occurred while sending. Please try again or email us directly at lotusdenfance@gmail.com.",
 
     /* — Footer — */
     "footer.brand": "Non-profit association (loi 1901).<br />Acting for disadvantaged children in Vietnam.",
@@ -327,7 +328,7 @@
     "cf.s2a.l1": "<strong>Full name</strong> — to identify you and reply;",
     "cf.s2a.l2": "<strong>Email address</strong> — to reply to you;",
     "cf.s2a.l3": "<strong>Subject and message</strong> — to handle your request.",
-    "cf.s2a.note": "This form opens your email client: the information is sent by email to the association's address. <strong>Legal basis:</strong> your consent (voluntary sending of the message).",
+    "cf.s2a.note": "The message is sent to the association's email address via the form delivery service <a href=\"https://web3forms.com/privacy\" target=\"_blank\" rel=\"noopener\">Web3Forms</a> (processor), which does not store the message content. <strong>Legal basis:</strong> your consent (voluntary sending of the message).",
     "cf.s2b": "b) Solidarity shop order",
     "cf.s2b.p": "When you place an order via the cart, we process:",
     "cf.s2b.l1": "<strong>First and last name</strong> — to prepare and identify your order;",
@@ -386,7 +387,8 @@
       "c.subj.autre": "Autre",
       "c.subj.default": "Contact site",
       "c.body": "Bonjour,\n\nNom : {name}\nEmail : {email}\n\nMessage :\n{message}\n\nEnvoyé depuis le site Lotus d'Enfance.",
-      "c.subject.prefix": "[Site] "
+      "c.subject.prefix": "[Site] ",
+      "c.sending": "Envoi en cours…"
     },
     en: {
       "cart.empty": "Your cart is empty",
@@ -412,7 +414,8 @@
       "c.subj.autre": "Other",
       "c.subj.default": "Site contact",
       "c.body": "Hello,\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}\n\nSent from the Lotus d'Enfance website.",
-      "c.subject.prefix": "[Site] "
+      "c.subject.prefix": "[Site] ",
+      "c.sending": "Sending…"
     }
   };
 

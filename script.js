@@ -111,39 +111,55 @@ document.querySelectorAll(
   '.action-card, .stat-card, .value-item, .step, .event-card, .contact-item, .product-card, .soutenir-card'
 ).forEach(el => { el.classList.add('fade-in'); fadeObs.observe(el); });
 
-// ===== FORMULAIRE CONTACT =====
+// ===== FORMULAIRE CONTACT (Web3Forms — envoi réel) =====
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
+const formError   = document.getElementById('formError');
 if (contactForm) {
-  contactForm.addEventListener('submit', e => {
+  contactForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const name    = document.getElementById('name').value.trim();
-    const email   = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value.trim();
+    const tr  = (typeof window.t === 'function') ? window.t : (k => k);
+    const btn = contactForm.querySelector('button[type="submit"]');
+    const btnLabel = btn.textContent;
 
-    // Libellés via le moteur i18n (lang.js) avec repli français
-    const tr = (typeof window.t === 'function') ? window.t : (k => k);
+    // Sujet lisible pour l'e-mail reçu par l'association
+    const name = document.getElementById('name').value.trim();
+    const cat  = document.getElementById('subject').value;
     const subjectKeys = {
       don: 'c.subj.don', benevole: 'c.subj.benevole', partenariat: 'c.subj.partenariat',
       info: 'c.subj.info', autre: 'c.subj.autre'
     };
-    const subjectText = subjectKeys[subject] ? tr(subjectKeys[subject]) : tr('c.subj.default');
+    const subjectText = subjectKeys[cat] ? tr(subjectKeys[cat]) : tr('c.subj.default');
+    const w3fSubject = document.getElementById('w3f-subject');
+    if (w3fSubject) w3fSubject.value = tr('c.subject.prefix') + subjectText + (name ? ' — ' + name : '');
 
-    const body = tr('c.body')
-      .replace('{name}', name)
-      .replace('{email}', email)
-      .replace('{message}', message);
+    if (formSuccess) formSuccess.style.display = 'none';
+    if (formError)   formError.style.display   = 'none';
+    btn.disabled = true;
+    btn.textContent = tr('c.sending');
 
-    const mailtoUrl =
-      `mailto:lotusdenfance@gmail.com` +
-      `?subject=${encodeURIComponent(tr('c.subject.prefix') + subjectText + ' — ' + name)}` +
-      `&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailtoUrl;
-
-    formSuccess.style.display = 'block';
-    contactForm.reset();
-    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    try {
+      const res  = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(contactForm)
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        formSuccess.style.display = 'block';
+        contactForm.reset();
+        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        throw new Error(data.message || 'submit failed');
+      }
+    } catch (err) {
+      if (formError) {
+        formError.style.display = 'block';
+        formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = btnLabel;
+    }
   });
 }

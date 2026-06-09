@@ -56,7 +56,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <script src="lang.js?v=1"></script>
+  <script src="lang.js?v=2"></script>
 </head>
 <body>
 
@@ -745,6 +745,12 @@
           </div>
         </div>
         <form class="contact-form" id="contactForm">
+          <!-- Web3Forms : envoi réel par e-mail, sans logiciel de messagerie côté visiteur -->
+          <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS" />
+          <input type="hidden" name="subject" id="w3f-subject" value="Nouveau message – Site Lotus d'Enfance" />
+          <input type="hidden" name="from_name" value="Site Lotus d'Enfance" />
+          <!-- Anti-spam (honeypot) : doit rester vide -->
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none !important" aria-hidden="true" />
           <div class="form-group">
             <label for="name" data-i18n="contact.form.name">Nom complet *</label>
             <input type="text" id="name" name="name" required placeholder="Votre nom" data-i18n-placeholder="contact.form.name.ph" />
@@ -755,7 +761,7 @@
           </div>
           <div class="form-group">
             <label for="subject" data-i18n="contact.form.subject">Sujet</label>
-            <select id="subject" name="subject">
+            <select id="subject" name="categorie">
               <option value="" data-i18n="contact.form.subject.choose">Choisir un sujet</option>
               <option value="don" data-i18n="contact.form.subject.don">Faire un don</option>
               <option value="benevole" data-i18n="contact.form.subject.benevole">Devenir bénévole</option>
@@ -770,7 +776,10 @@
           </div>
           <button type="submit" class="btn-primary btn-full" data-i18n="contact.form.submit">Envoyer le message</button>
           <div class="form-success" id="formSuccess" data-i18n="contact.form.success">
-            ✅ Votre logiciel de messagerie va s'ouvrir : cliquez sur « Envoyer » pour finaliser. Nous vous répondrons très prochainement.
+            ✅ Merci ! Votre message a bien été envoyé. Nous vous répondrons très prochainement.
+          </div>
+          <div class="form-success" id="formError" style="display:none;background:#FDE8EF;color:#9B3070;" data-i18n="contact.form.error">
+            ⚠️ Une erreur est survenue lors de l'envoi. Réessayez ou écrivez-nous directement à lotusdenfance@gmail.com.
           </div>
         </form>
       </div>
@@ -839,6 +848,6 @@
     ❤
   </a>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>
